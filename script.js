@@ -1,5 +1,5 @@
 
-
+console.log(1);
 document.addEventListener( 'DOMContentLoaded', function() {
 
 	var data = false;
@@ -22,6 +22,18 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		}
 	}, 300 );
 
+
+	function ajax( type, url, data, cb ) {
+		var xhr = new XMLHttpRequest();
+		xhr.open( type, url );
+
+		xhr.onreadystatechange = function() {
+			if( xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 ) {
+				cb( this.responseText );
+			}
+		}
+		xhr.send( data );
+	}
 
 	function observe_btn() {
 		// MutationObserver IE11+
@@ -51,14 +63,21 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	}
 
 
-	function request_data_( html ) {
-		jQuery.post( drewl_meta_preview.ajax_url + '?action=drewl_meta_preview_get_data&hash=' + hash + '&id=' + drewl_meta_preview.post_id, { html: html } ).done( function( data_ ) {
+	function request_data_( content ) {
+		// WF firewall XSS
+		var p = document.createElement( 'p' );
+		p.textContent = content;
+		var fd = new FormData();
+		fd.append( 'content', p.innerHTML );
+
+		ajax( 'POST', drewl_meta_preview.ajax_url + '?action=drewl_meta_preview_get_data&hash=' + hash + '&id=' + drewl_meta_preview.post_id, fd, function( data_ ) {
 			data = data_;
 			update_widgets();
 			doing_request = false;
 		} );
 	}
 	function request_data() {
+		console.log(3);
 		if ( doing_request )
 			return;
 
@@ -66,8 +85,8 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		var status = wp.data.select( 'core/editor' ).getEditedPostAttribute( 'status' );
 
 		if ( ( init_status == 'draft' && !status ) || status == 'draft' ) {
-			jQuery.get( drewl_meta_preview.site_url + '/?p=' + drewl_meta_preview.post_id ).done( function ( html ) {
-				request_data_( html );
+			ajax( 'GET', drewl_meta_preview.site_url + '/?p=' + drewl_meta_preview.post_id, '', function( content ) {
+				request_data_( content );
 			} );
 		} else {
 			request_data_( '' );
@@ -84,6 +103,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		data = false;
 	}
 
+	console.log(2);
 	if ( init_status != 'auto-draft' ) {
 		request_data();
 	}
