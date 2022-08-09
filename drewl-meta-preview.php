@@ -21,11 +21,19 @@ class DrewlMetaPreviewPlugin {
 		add_action( 'init', function() {
 			// в отличие от темы у файлов перевода должен быть префикс drewl-meta-preview-ru_RU.mo
 			load_plugin_textdomain( 'drewl-meta-preview', false,
-				dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+				plugin_dir_path( __FILE__ ) . '/languages' );
+
+			// drewl.com only
+			// allow access to drafts via REST API
+			if ( is_user_logged_in() && current_user_can( 'edit_posts' ) ) {
+				global $wp_post_statuses;
+				$wp_post_statuses['draft']->public = true;
+			}
 		} );
 
 		add_action( 'add_meta_boxes', function() {
-			add_meta_box( 'drewl_meta_preview', __( 'Meta Preview', 'drewl-meta-preview' ), array( $this, 'meta_preview_callback' ), array( 'page', 'post' ), 'normal' );
+			add_meta_box( 'drewl_meta_preview', __( 'Meta Preview', 'drewl-meta-preview' ),
+				array( $this, 'meta_preview_callback' ), array( 'page', 'post' ), 'normal' );
 		} );
 
 		add_action( 'admin_enqueue_scripts', function ( $hook ) {
@@ -33,9 +41,15 @@ class DrewlMetaPreviewPlugin {
 
 			if( in_array( $hook, array( 'post.php', 'post-new.php' ) ) && in_array( $post_type, array( 'page', 'post' ) ) ) {
 
-				wp_enqueue_style( 'drewl-meta-preview', plugin_dir_url( __FILE__ ) . 'style.css', array(), time() );
+				wp_enqueue_style( 'drewl-meta-preview', plugin_dir_url( __FILE__ ) . 'style.css',
+					array(),
+					filemtime( plugin_dir_path( __FILE__ ) . '/style.css' )
+				);
+
 				wp_enqueue_script( 'drewl-meta-preview', plugin_dir_url( __FILE__ ) . 'script.js',
-					array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components'/*, 'wp-editor'*/ ), time(), true );
+					array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components'/*, 'wp-editor'*/ ),
+					filemtime( plugin_dir_path( __FILE__ ) . '/script.js' ), true
+				);
 				wp_localize_script( 'drewl-meta-preview', 'drewl_meta_preview',
 					array( 
 						'ajax_url'	=> admin_url( 'admin-ajax.php' ),
@@ -45,16 +59,14 @@ class DrewlMetaPreviewPlugin {
 				);
 			}
 		});
-		// add_action( 'enqueue_block_editor_assets', function () {
-		// } );
 
-		add_filter( 'script_loader_tag', function( $tag, $handle ) {
-			if ( $handle == 'drewl-meta-preview' ) {
-				return str_replace( ' src', ' async="async" src', $tag );
-			}
+		// add_filter( 'script_loader_tag', function( $tag, $handle ) {
+		// 	if ( $handle == 'drewl-meta-preview' ) {
+		// 		return str_replace( ' src', ' async="async" src', $tag );
+		// 	}
 
-			return $tag;
-		}, 10, 2 );
+		// 	return $tag;
+		// }, 10, 2 );
 
 		add_action( 'wp_ajax_drewl_meta_preview_get_data', array( $this, 'get_data' ) );
 	}
@@ -120,14 +132,18 @@ class DrewlMetaPreviewPlugin {
 		return ob_get_clean();
 	}
 
+	private function no_meta_tags () {
+		die( '<div class="drewl-info">' . __( 'No meta-tags found. Install any SEO plugins or specify them manually in your theme\'s header.php file.', 'drewl-meta-preview' ) . '</div>' );
+	}
+
 	public function get_data() {
 		$url = get_permalink( $_GET['id'] );
 
 		$body = '';
 
-		if ( ! empty( $_POST['html'] ) ) {
+		if ( ! empty( $_POST['content'] ) ) {
 			// если статья в статусе черновика, то через wp_remote_get ее не получить, только со стороны JS
-			$body = stripslashes( $_POST['html'] );
+			$body = stripslashes( $_POST['content'] );
 		} else {
 			// если процесс PHP один, то он будет блокировать сам себя и по истечении
 			// таймаута вернет wp_error
@@ -141,14 +157,24 @@ class DrewlMetaPreviewPlugin {
 
 			$body = $response['body'];
 		}
+		$body = html_entity_decode( $body );
 
-		$start = strpos( $body, '<head>' );
-		$end = strpos( $body, '</head>' );
+		if ( substr( $body, 0, 1 ) == '{' ) {
+			$json = json_decode( $body );
+			if ( $json && ! empty( $json->yoast_head ) ) {
+				$head = '<head>' . $json->yoast_head . '</head>';
+			} else {
+				$this->no_meta_tags();
+			}
+		} else {
+			$start = strpos( $body, '<head>' );
+			$end = strpos( $body, '</head>' );
 
-		$head = substr( $body, $start, $end - $start + 7 );
+			$head = substr( $body, $start, $end - $start + 7 );
+		}
 
 		$dom = new DOMDocument();
-		$dom->loadHtml($head);
+		$dom->loadHtml( $head );
 
 		$meta = array( 'title' => '', 'description' => '', 'image' => '', 'url' => '', 'icon' => '', 'name' => '' );
 
@@ -174,7 +200,7 @@ class DrewlMetaPreviewPlugin {
 		}
 
 		if ( empty( $meta['url'] ) || empty( $meta['title'] ) ) {
-			die( '<div class="drewl-info">' . __( 'No meta-tags found. Install any SEO plugins or specify them manually in your theme\'s header.php file.', 'drewl-meta-preview' ) . '</div>' );
+			$this->no_meta_tags();
 		}
 
 		$out = $this->render( $meta );
@@ -191,5 +217,7 @@ class DrewlMetaPreviewPlugin {
 }
 
 new DrewlMetaPreviewPlugin();
+
+
 
 ?>
