@@ -1,5 +1,4 @@
 
-console.log(1);
 document.addEventListener( 'DOMContentLoaded', function() {
 
 	var data = false;
@@ -50,7 +49,6 @@ document.addEventListener( 'DOMContentLoaded', function() {
 
 				if ( is_done_saving ) {
 					request_data();
-					// console.log( 'done saving' );
 				}
 			} );
 		} );
@@ -77,7 +75,6 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		} );
 	}
 	function request_data() {
-		console.log(3);
 		if ( doing_request )
 			return;
 
@@ -103,7 +100,6 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		data = false;
 	}
 
-	console.log(2);
 	if ( init_status != 'auto-draft' ) {
 		request_data();
 	}

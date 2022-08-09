@@ -60,6 +60,7 @@ class DrewlMetaPreviewPlugin {
 			}
 		});
 
+		// с async не всегда DOMContentLoaded срабатывает
 		// add_filter( 'script_loader_tag', function( $tag, $handle ) {
 		// 	if ( $handle == 'drewl-meta-preview' ) {
 		// 		return str_replace( ' src', ' async="async" src', $tag );
@@ -157,6 +158,11 @@ class DrewlMetaPreviewPlugin {
 
 			$body = $response['body'];
 		}
+
+		if ( empty( $body ) ) {
+			$this->no_meta_tags();
+		}
+
 		$body = html_entity_decode( $body );
 
 		if ( substr( $body, 0, 1 ) == '{' ) {
