@@ -1,0 +1,1 @@
+# wordpress-serp-preview-plugin
