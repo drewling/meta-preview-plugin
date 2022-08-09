@@ -1,0 +1,369 @@
+
+@import 'mixins'
+
+
+
+#drewl-meta-preview
+	max-width: 600px
+	margin: 10px auto
+	border: 1px solid #edf0f2
+	border-radius: 14px
+
+	.drewl-info
+		text-align: center
+		margin-bottom: 53px
+	.drewl-title
+		color: #b8bbbf
+		font-weight: 500
+		font-size: 1.3em
+		margin-bottom: 0.8em
+
+	.drewl-icon
+		@extend %image
+		// background-color: #e2e2e2
+		display: inline-block
+		width: 16px
+		height: 16px
+
+	.drewl-image
+		@extend %image
+		background-color: #e2e2e2
+		display: block
+		&:after
+			content: ''
+			display: block
+			// padding-bottom: 60%
+.drewl-mp-card
+	position: relative
+	margin: 0 0 26px
+	padding: 0 0 26px
+	display: none
+	border-bottom: 1px solid #edf0f2
+.drewl-mp-controls
+	user-select: none
+	overflow: hidden
+	border-bottom: 1px solid #edf0f2
+	padding: 20px 24px 14px
+	span
+		cursor: pointer
+		padding: 10px
+		margin: 0 2px 6px
+		display: inline-block
+		border-radius: 30px
+		@include transition(background 0.3s ease-in-out, border 0.3s ease-in-out)
+		border: 1px solid #cccccc
+		float: left
+		@include on-hover-inactive-icon
+	span:last-child
+		line-height: 17px
+		float: right
+		min-width: 95px
+		text-align: center
+		svg
+			display: none
+	svg
+		pointer-events: none
+		display: block
+	path
+		@include transition(fill 0.2s)
+
+.drewl-mp-widgets
+	padding: 26px 28px 0
+	margin-bottom: -27px
+
+
+.dmp1
+	.drewl-mp-controls span:nth-child(1)
+		background: #000
+		border: 1px solid #000
+		path
+			fill: #fff
+		@include on-hover-active-icon
+	.drewl-mp-card:nth-child(1)
+		display: block
+.dmp2
+	.drewl-mp-controls span:nth-child(2)
+		background: #000
+		border: 1px solid #000
+		path
+			fill: #fff
+		@include on-hover-active-icon
+	.drewl-mp-card:nth-child(2)
+		display: block
+.dmp3
+	.drewl-mp-controls span:nth-child(3)
+		background: #000
+		border: 1px solid #000
+		path
+			fill: #fff
+		@include on-hover-active-icon
+	.drewl-mp-card:nth-child(3)
+		display: block
+.dmp4
+	.drewl-mp-controls span:nth-child(4)
+		background: #000
+		border: 1px solid #000
+		path
+			fill: #fff
+		@include on-hover-active-icon
+	.drewl-mp-card:nth-child(4)
+		display: block
+.dmp5
+	.drewl-mp-controls span:nth-child(5)
+		background: #000
+		border: 1px solid #000
+		path
+			fill: #fff
+		@include on-hover-active-icon
+	.drewl-mp-card:nth-child(5)
+		display: block
+.dmp6
+	.drewl-mp-controls span:nth-child(6)
+		background: #000
+		border: 1px solid #000
+		path
+			fill: #fff
+		@include on-hover-active-icon
+	.drewl-mp-card:nth-child(6)
+		display: block
+.dmp1.dmp2.dmp3.dmp4.dmp5.dmp6
+	.drewl-mp-controls span:nth-child(7)
+		background: #000
+		border: 1px solid #000
+		color: #fff
+		svg
+			display: inline-block
+		@include on-hover-active-icon
+
+
+%image
+	background-size: cover
+	background-repeat: no-repeat
+	background-position: center
+%one-line
+	overflow: hidden
+	text-overflow: ellipsis
+	white-space: nowrap
+%two-lines
+	overflow: hidden
+	display: -webkit-box
+	-webkit-line-clamp: 2
+	-webkit-box-orient: vertical
+	text-overflow: ellipsis
+%flex-column
+	@include flex
+	-webkit-box-orient: vertical
+	-webkit-box-direction: normal
+	-ms-flex-direction: column
+	flex-direction: column
+%flex-last
+	@include flex-order(5)
+%three-dots
+	content: ''
+	display: inline-block
+	width: 18px
+	height: 18px
+	background-image: url(../images/3dots.svg)
+
+
+.drewl-mp-google
+	font-family: Arial, sans-serif
+	.drewl-image
+		display: none
+	.drewl-t
+		@extend %one-line
+		cursor: pointer
+		color: #1a0dab
+		font-size: 20px
+		line-height: 1.3
+		padding: 5px 0 3px
+		&:hover
+			text-decoration: underline
+	.drewl-u
+		color: #202124
+		font-size: 14px
+		line-height: 1.14
+		margin-bottom: 2px
+		display: inline-block
+		padding-right: 34px
+		position: relative
+		span
+			color: #5f6368
+		&:after
+			@extend %three-dots
+			position: absolute
+			right: 0
+			top: -2px
+		// old version with a green down arrow
+		// &:after
+		// 	content: ''
+		// 	display: inline-block
+		// 	position: relative
+		// 	top: 2px
+		// 	left: 4px
+		// 	border-color: #70757a transparent
+		// 	border-style: solid
+		// 	border-width: 5px 4px 0 4px
+	.drewl-d
+		@extend %two-lines
+		color: #545454
+		font-size: 13px
+		line-height: 1.5
+		height: 3em
+
+.drewl-mp-facebook
+	font-family: Helvetica, Arial, sans-serif
+	max-width: 500px
+	cursor: pointer
+	border: 1px solid #dadde1
+	background: #f2f3f5
+	.drewl-image
+		width: 100%
+		&:after
+			padding-bottom: 50%
+	.drewl-inner
+		padding: 10px 12px
+		border-top: 1px solid #dadde1
+	.drewl-u
+		text-transform: uppercase
+		font-size: 12px
+		line-height: 1
+		color: #606770
+	.drewl-t
+		@extend %one-line
+		font-size: 16px
+		line-height: 1.25
+		margin: 5px 0 3px
+		color: #1d2129
+		font-weight: 600
+	.drewl-d
+		@extend %one-line
+		color: #606770
+		font-size: 14px
+
+.drewl-mp-twitter
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', sans-serif
+	max-width: 500px
+	cursor: pointer
+	border: 1px solid #E1E8ED
+	border-radius: 7px
+	.drewl-image
+		width: 100%
+		&:after
+			padding-bottom: 50%
+	.drewl-inner
+		@extend %flex-column
+		padding: 10px 14px
+		border-top: 1px solid #dadde1
+	.drewl-u
+		@extend %flex-last
+		font-size: 14px
+		margin: 5px 0 0
+		line-height: 1.3
+		color: #8899A6
+	.drewl-t
+		@extend %one-line
+		font-size: 14px
+		line-height: 1.3
+		margin: 0 0 6px
+		color: #18283E
+		font-weight: 700
+	.drewl-d
+		@extend %two-lines
+		color: #18283E
+		font-size: 14px
+		line-height: 1.3
+		height: 2.6em
+
+.drewl-mp-linkedin
+	font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif
+	max-width: 552px
+	border: 1px solid #e6e9ec
+	.drewl-image
+		width: 100%
+		&:after
+			padding-bottom: 52%
+	.drewl-inner
+		@extend %flex-column
+		padding: 8px 16px
+		border-top: 1px solid #e6e9ec
+		background: #f3f6f8
+	.drewl-u
+		@extend %flex-last
+		font-size: 12px
+		line-height: 1.33
+		color: #61626d
+	.drewl-t
+		@extend %one-line
+		font-size: 14px
+		line-height: 1.43
+		color: #000
+		font-weight: 600
+	.drewl-d
+		display: none
+
+.drewl-mp-pinterest
+	font-family: -apple-system, system-ui, 'Segoe UI', 'Roboto Oxygen-Sans', Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', Arial, sans-serif
+	max-width: 236px
+	.drewl-image
+		width: 100%
+		border-radius: 8px
+		&:after
+			padding-bottom: 52%
+	.drewl-inner
+		padding: 4px 8px
+	.drewl-u
+		display: none
+	.drewl-t
+		font-size: 14px
+		line-height: 1.2
+		color: #333
+		font-weight: 700
+		letter-spacing: -0.4px
+		padding-right: 19px
+		position: relative
+		&:after
+			@extend %three-dots
+			position: absolute
+			right: 0
+			top: 0
+			@include transform(rotate(90deg))
+	.drewl-d
+		display: none
+
+.drewl-mp-slack
+	font-family: 'Noto Sans', NotoSansJP, 'Slack-Lato', Lato, appleLogo, sans-serif
+	max-width: 520px
+	padding: 0 12px
+	position: relative
+	font-size: 15px
+	line-height: 1.47
+	@extend %flex-column
+	&:after
+		content: ''
+		position: absolute
+		height: 100%
+		left: -4px
+		top: 0
+		width: 4px
+		background-color: #e8e8e8
+		border-radius: 8px
+	.drewl-image
+		@extend %flex-last
+		width: 100%
+		max-width: 360px
+		border-radius: 4px
+		box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1)
+		margin-top: 5px
+		&:after
+			padding-bottom: 52%
+	.drewl-u
+		color: #717274
+	.drewl-t
+		font-weight: 700
+		color: #0576b9
+	.drewl-icon
+		vertical-align: middle
+		margin: 0 8px 0 0
+	.drewl-d
+		color: #2c2d30

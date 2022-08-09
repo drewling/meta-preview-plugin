@@ -1,0 +1,4 @@
+node_modules
+*.sublime*
+*.sh
+package-lock.json

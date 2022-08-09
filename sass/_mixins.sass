@@ -1,0 +1,29 @@
+
+
+@mixin transition($args...)
+	-webkit-transition: $args
+	transition: $args
+
+@mixin flex
+	display: -webkit-flex
+	display: -ms-flexbox
+	display: flex
+
+@mixin flex-order($arg)
+	-webkit-box-ordinal-group: $arg + 1
+	-ms-flex-order: $arg
+	order: $arg
+
+@mixin transform($arg)
+	-webkit-transform: $arg
+	transform: $arg
+
+@mixin on-hover-active-icon()
+	&:hover
+		background-color: #333
+		border-color: #333
+
+@mixin on-hover-inactive-icon()
+	&:hover
+		background-color: #edf0f2
+		border-color: #edf0f2

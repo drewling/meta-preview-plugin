@@ -1,0 +1,22 @@
+{
+  "name": "drewl-meta-preview",
+  "version": "1.0.0",
+  "description": "The Drewl Meta Preview plugin will display how your content (post or page) will show on different social sharing platforms.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drewling/wordpress-serp-preview-plugin.git"
+  },
+  "author": "Rhys Adams",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drewling/wordpress-serp-preview-plugin/issues"
+  },
+  "homepage": "https://github.com/drewling/wordpress-serp-preview-plugin#readme",
+  "devDependencies": {
+    "eslint": "^8.23.0"
+  }
+}
