@@ -24,17 +24,17 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		}
 	}, 300 );
 
-	// function ajax( type, url, data, cb ) {
-	// 	var xhr = new XMLHttpRequest();
-	// 	xhr.open( type, url );
+	function ajax( type, url, data, cb ) {
+		var xhr = new XMLHttpRequest();
+		xhr.open( type, url );
 
-	// 	xhr.onreadystatechange = function() {
-	// 		if( xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 ) {
-	// 			cb( this.responseText );
-	// 		}
-	// 	}
-	// 	xhr.send( data );
-	// }
+		xhr.onreadystatechange = function() {
+			if( xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 ) {
+				cb( this.responseText );
+			}
+		}
+		xhr.send( data );
+	}
 
 	function handle_click( e ) {
 		if ( e.target.nodeName == 'SPAN' ) {
@@ -79,26 +79,25 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		} );
 	}
 
-
 	function request_data_( content ) {
 		// WF firewall XSS
 		var p = document.createElement( 'p' );
 		p.textContent = content;
 		// FormData IE10+
-		// var fd = new FormData();
-		// fd.append( 'content', p.innerHTML );
+		var fd = new FormData();
+		fd.append( 'content', p.innerHTML );
 
-		// ajax( 'POST', drewl_meta_preview.ajax_url + '?action=drewl_meta_preview_get_data&hash=' + hash + '&id=' + drewl_meta_preview.post_id, fd, function( data_ ) {
-		// 	data = data_;
-		// 	update_widgets();
-		// 	doing_request = false;
-		// } );
-
-		jQuery.post( drewl_meta_preview.ajax_url + '?action=drewl_meta_preview_get_data&hash=' + hash + '&id=' + drewl_meta_preview.post_id, { content: p.innerHTML } ).done( function( data_ ) {
+		ajax( 'POST', drewl_meta_preview.ajax_url + '?action=drewl_meta_preview_get_data&hash=' + hash + '&id=' + drewl_meta_preview.post_id, fd, function( data_ ) {
 			data = data_;
 			update_widgets();
 			doing_request = false;
 		} );
+
+		// jQuery.post( drewl_meta_preview.ajax_url + '?action=drewl_meta_preview_get_data&hash=' + hash + '&id=' + drewl_meta_preview.post_id, { content: p.innerHTML } ).done( function( data_ ) {
+		// 	data = data_;
+		// 	update_widgets();
+		// 	doing_request = false;
+		// } );
 	}
 	function request_data() {
 		if ( doing_request )
@@ -108,16 +107,14 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		var status = wp.data.select( 'core/editor' ).getEditedPostAttribute( 'status' );
 
 		if ( ( init_status == 'draft' && !status ) || status == 'draft' ) {
-			// ajax( 'GET', drewl_meta_preview.site_url + '/?p=' + drewl_meta_preview.post_id, '', function( content ) {
-			// 	request_data_( content );
-			// } );
-			// 
-			jQuery.get( 'http://localhost/meta-preview/wp-content/plugins/wordpress-serp-preview-plugin/response.json' ).done( function ( content ) {
-			// jQuery.get( drewl_meta_preview.site_url + '/?p=' + drewl_meta_preview.post_id ).done( function ( content ) {
-				// console.log(content);
-				// return;
-				request_data_( content.yoast_head != undefined ? '<head>' + content.yoast_head + '</head>' : content );
+			// http://localhost/meta-preview/wp-content/plugins/wordpress-serp-preview-plugin/response.json
+			ajax( 'GET', drewl_meta_preview.site_url + '/?p=' + drewl_meta_preview.post_id, '', function( content ) {
+				request_data_( content );
 			} );
+
+			// jQuery.get( drewl_meta_preview.site_url + '/?p=' + drewl_meta_preview.post_id ).done( function ( content ) {
+			// 	request_data_( content.yoast_head != undefined ? '<head>' + content.yoast_head + '</head>' : content );
+			// } );
 		} else {
 			request_data_( '' );
 		}

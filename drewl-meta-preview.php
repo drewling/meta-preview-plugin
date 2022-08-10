@@ -156,19 +156,20 @@ class DrewlMetaPreviewPlugin {
 		}
 
 		$body = html_entity_decode( $body );
+		$head = '';
 
-		// if ( substr( $body, 0, 1 ) == '{' ) {
-		// 	$json = json_decode( $body );
-		// 	if ( $json && ! empty( $json->yoast_head ) ) {
-		// 		$head = '<head>' . $json->yoast_head . '</head>';
-		// 	} else {
-		// 		$this->no_meta_tags();
-		// 	}
-		// } else {
-		// }
-		$start = strpos( $body, '<head>' );
-		$end = strpos( $body, '</head>' );
-		$head = substr( $body, $start, $end - $start + 7 );
+		if ( substr( $body, 0, 1 ) == '{' ) {
+			$json = json_decode( $body );
+			if ( $json && ! empty( $json->yoast_head ) ) {
+				$head = '<head>' . $json->yoast_head . '</head>';
+			} else {
+				$this->no_meta_tags();
+			}
+		} else {
+			$start = strpos( $body, '<head>' );
+			$end = strpos( $body, '</head>' );
+			$head = substr( $body, $start, $end - $start + 7 );
+		}
 
 		$dom = new DOMDocument();
 		$dom->loadHtml( $head );
