@@ -2,12 +2,11 @@
 #drewl-meta-preview
 	max-width: 600px
 	margin: 10px auto
+	min-height: 150px
 
 	.drewl-info
 		text-align: center
 
-	.drewl-card
-		margin: 6px 0 30px
 
 	.drewl-icon
 		@extend %image
@@ -24,6 +23,95 @@
 			content: ''
 			display: block
 			// padding-bottom: 60%
+.drewl-mp-card
+	margin: 6px 0 30px
+	display: none
+.drewl-mp-controls
+	user-select: none
+	margin-bottom: 10px
+	overflow: hidden
+	span
+		cursor: pointer
+		padding: 10px
+		margin: 0 2px
+		display: inline-block
+		border-radius: 30px
+		transition: background 0.2s
+		border: 1px solid #cccccc
+	span:last-child
+		line-height: 17px
+		float: right
+		min-width: 95px
+		text-align: center
+		svg
+			display: none
+	svg
+		pointer-events: none
+		display: block
+	path
+		transition: fill 0.2s
+		// fill: #9fa2a6
+	// .active
+	// 	background: #c0c0c0
+	// 	path
+
+
+.dmp1
+	.drewl-mp-controls span:nth-child(1)
+		background: #000
+		border: 1px solid #000
+		path
+			fill: #fff
+	.drewl-mp-card:nth-child(1)
+		display: block
+.dmp2
+	.drewl-mp-controls span:nth-child(2)
+		background: #000
+		border: 1px solid #000
+		path
+			fill: #fff
+	.drewl-mp-card:nth-child(2)
+		display: block
+.dmp3
+	.drewl-mp-controls span:nth-child(3)
+		background: #000
+		border: 1px solid #000
+		path
+			fill: #fff
+	.drewl-mp-card:nth-child(3)
+		display: block
+.dmp4
+	.drewl-mp-controls span:nth-child(4)
+		background: #000
+		border: 1px solid #000
+		path
+			fill: #fff
+	.drewl-mp-card:nth-child(4)
+		display: block
+.dmp5
+	.drewl-mp-controls span:nth-child(5)
+		background: #000
+		border: 1px solid #000
+		path
+			fill: #fff
+	.drewl-mp-card:nth-child(5)
+		display: block
+.dmp6
+	.drewl-mp-controls span:nth-child(6)
+		background: #000
+		border: 1px solid #000
+		path
+			fill: #fff
+	.drewl-mp-card:nth-child(6)
+		display: block
+.dmp1.dmp2.dmp3.dmp4.dmp5.dmp6
+	.drewl-mp-controls span:nth-child(7)
+		background: #000
+		border: 1px solid #000
+		color: #fff
+		svg
+			display: inline-block
+
 
 %image
 	background-size: cover
@@ -56,7 +144,7 @@
 	display: inline-block
 	width: 18px
 	height: 18px
-	background-image: url(images/3dots.svg)
+	background-image: url(../images/3dots.svg)
 
 
 .drewl-mp-google
@@ -268,5 +356,5 @@
 
 
 
-@import 'mobile'
+@import 'mixins'
 

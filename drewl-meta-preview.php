@@ -19,12 +19,10 @@ class DrewlMetaPreviewPlugin {
 
 	public function __construct() {
 		add_action( 'init', function() {
-			// в отличие от темы у файлов перевода должен быть префикс drewl-meta-preview-ru_RU.mo
 			load_plugin_textdomain( 'drewl-meta-preview', false,
 				plugin_dir_path( __FILE__ ) . '/languages' );
 
-			// drewl.com only
-			// allow access to drafts via REST API
+			// allows access to drafts via REST API
 			if ( is_user_logged_in() && current_user_can( 'edit_posts' ) ) {
 				global $wp_post_statuses;
 				$wp_post_statuses['draft']->public = true;
@@ -36,19 +34,19 @@ class DrewlMetaPreviewPlugin {
 				array( $this, 'meta_preview_callback' ), array( 'page', 'post' ), 'normal' );
 		} );
 
-		add_action( 'admin_enqueue_scripts', function ( $hook ) {
+		add_action( 'admin_enqueue_scripts', function( $hook ) {
 			global $post_type, $post;
 
 			if( in_array( $hook, array( 'post.php', 'post-new.php' ) ) && in_array( $post_type, array( 'page', 'post' ) ) ) {
 
-				wp_enqueue_style( 'drewl-meta-preview', plugin_dir_url( __FILE__ ) . 'style.css',
+				wp_enqueue_style( 'drewl-meta-preview', plugin_dir_url( __FILE__ ) . 'admin/css/style.css',
 					array(),
-					filemtime( plugin_dir_path( __FILE__ ) . '/style.css' )
+					filemtime( plugin_dir_path( __FILE__ ) . '/admin/css/style.css' )
 				);
 
-				wp_enqueue_script( 'drewl-meta-preview', plugin_dir_url( __FILE__ ) . 'script.js',
+				wp_enqueue_script( 'drewl-meta-preview', plugin_dir_url( __FILE__ ) . 'admin/js/script.js',
 					array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components'/*, 'wp-editor'*/ ),
-					filemtime( plugin_dir_path( __FILE__ ) . '/script.js' ), true
+					filemtime( plugin_dir_path( __FILE__ ) . '/admin/js/script.js' ), true
 				);
 				wp_localize_script( 'drewl-meta-preview', 'drewl_meta_preview',
 					array( 
@@ -58,38 +56,32 @@ class DrewlMetaPreviewPlugin {
 					)
 				);
 			}
-		});
-
-		// с async не всегда DOMContentLoaded срабатывает
-		// add_filter( 'script_loader_tag', function( $tag, $handle ) {
-		// 	if ( $handle == 'drewl-meta-preview' ) {
-		// 		return str_replace( ' src', ' async="async" src', $tag );
-		// 	}
-
-		// 	return $tag;
-		// }, 10, 2 );
+		} );
 
 		add_action( 'wp_ajax_drewl_meta_preview_get_data', array( $this, 'get_data' ) );
+
+		add_action( 'save_post', function( $post_id ) {
+			if ( empty( $_POST['drewl_mp_options'] ) || ! current_user_can( 'edit_posts' ) ) {
+				return;
+			}
+
+			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+				return;
+			}
+
+			update_option( 'drewl_mp_options', htmlentities( $_POST['drewl_mp_options'] ) );
+		} );
 	}
 
+
 	public function meta_preview_callback( $post ) {
-		?>
-		<div id="drewl-meta-preview">
-			<div class="drewl-info">
-			<?php if ( $post->post_status == 'auto-draft' ): ?>
-				<?php _e( 'Save or publish the page to see the widgets', 'drewl-meta-preview' ); ?>
-			<?php else: ?>
-				<?php _e( 'Retrieving data...', 'drewl-meta-preview' ); ?>
-			<?php endif; ?>
-			</div>
-		</div>
-		<?php
+		$classes = get_option( 'drewl_mp_options', 'dmp1 dmp2 dmp3 dmp4 dmp5 dmp6' );
+		include_once plugin_dir_path( __FILE__ ) . '/admin/partials/container.php';
 	}
 
 	private function format_url( $meta, $name ) {
 		$url = parse_url( $meta['url'] );
 		$out = '';
-		// $url['query']
 
 		if ( $name == 'Google' ) {
 			$out = $url['scheme'] . '://' . $url['host'] ;
@@ -116,15 +108,17 @@ class DrewlMetaPreviewPlugin {
 		?>
 
 		<?php foreach ( $names as $name ): ?>
-			<div><?php echo $name; ?></div>
-			<div class="drewl-card drewl-mp-<?php echo strtolower( $name ); ?>">
-				<div class="drewl-image" style="background-image: url(<?php echo $meta['image']; ?>);"></div>
-				<div class="drewl-inner">
-					<span class="drewl-u">
-						<?php echo $this->format_url( $meta, $name ); ?>
-					</span>
-					<div class="drewl-t"><?php echo $meta['title']; ?></div>
-					<div class="drewl-d"><?php echo $meta['description']; ?></div>
+			<div class="drewl-mp-card">
+				<?php echo $name; ?>
+				<div class="drewl-mp-<?php echo strtolower( $name ); ?>">
+					<div class="drewl-image" style="background-image: url(<?php echo $meta['image']; ?>);"></div>
+					<div class="drewl-inner">
+						<span class="drewl-u">
+							<?php echo $this->format_url( $meta, $name ); ?>
+						</span>
+						<div class="drewl-t"><?php echo $meta['title']; ?></div>
+						<div class="drewl-d"><?php echo $meta['description']; ?></div>
+					</div>
 				</div>
 			</div>
 		<?php endforeach; ?>
@@ -133,7 +127,7 @@ class DrewlMetaPreviewPlugin {
 		return ob_get_clean();
 	}
 
-	private function no_meta_tags () {
+	private function no_meta_tags() {
 		die( '<div class="drewl-info">' . __( 'No meta-tags found. Install any SEO plugins or specify them manually in your theme\'s header.php file.', 'drewl-meta-preview' ) . '</div>' );
 	}
 
@@ -143,11 +137,9 @@ class DrewlMetaPreviewPlugin {
 		$body = '';
 
 		if ( ! empty( $_POST['content'] ) ) {
-			// если статья в статусе черновика, то через wp_remote_get ее не получить, только со стороны JS
+			// draft posts can't be acccessed via wp_remote_get
 			$body = stripslashes( $_POST['content'] );
 		} else {
-			// если процесс PHP один, то он будет блокировать сам себя и по истечении
-			// таймаута вернет wp_error
 			$response = wp_remote_get( $url, array(
 				'timeout' => 10,
 			) );
@@ -165,19 +157,18 @@ class DrewlMetaPreviewPlugin {
 
 		$body = html_entity_decode( $body );
 
-		if ( substr( $body, 0, 1 ) == '{' ) {
-			$json = json_decode( $body );
-			if ( $json && ! empty( $json->yoast_head ) ) {
-				$head = '<head>' . $json->yoast_head . '</head>';
-			} else {
-				$this->no_meta_tags();
-			}
-		} else {
-			$start = strpos( $body, '<head>' );
-			$end = strpos( $body, '</head>' );
-
-			$head = substr( $body, $start, $end - $start + 7 );
-		}
+		// if ( substr( $body, 0, 1 ) == '{' ) {
+		// 	$json = json_decode( $body );
+		// 	if ( $json && ! empty( $json->yoast_head ) ) {
+		// 		$head = '<head>' . $json->yoast_head . '</head>';
+		// 	} else {
+		// 		$this->no_meta_tags();
+		// 	}
+		// } else {
+		// }
+		$start = strpos( $body, '<head>' );
+		$end = strpos( $body, '</head>' );
+		$head = substr( $body, $start, $end - $start + 7 );
 
 		$dom = new DOMDocument();
 		$dom->loadHtml( $head );
