@@ -1,3 +1,8 @@
+<?php
+
+defined( 'ABSPATH' ) || exit;
+
+?>
 
 <div id="drewl-meta-preview" class="<?php echo $classes; ?>">
 	<div class="drewl-mp-controls">
@@ -21,7 +26,7 @@
 		</span>
 		<span>
 			<svg width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.316 1.18a.61.61 0 0 1 0 .874L5.436 7.82a.639.639 0 0 1-.891 0l-3.36-3.294a.61.61 0 0 1 0-.873.639.639 0 0 1 .89 0L4.99 6.509l5.435-5.328a.639.639 0 0 1 .89 0z" fill="#ffffff" stroke="#ffffff"/></svg>
-			Preview all
+			<?php _e( 'Preview all', 'drewl-meta-preview' ); ?>
 		</span>
 	</div>
 	

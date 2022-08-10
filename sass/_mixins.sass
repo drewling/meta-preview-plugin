@@ -1,4 +1,19 @@
 
 
+@mixin transition($args...)
+	-webkit-transition: $args
+	transition: $args
 
+@mixin flex
+	display: -webkit-flex
+	display: -ms-flexbox
+	display: flex
 
+@mixin flex-order($arg)
+	-webkit-box-ordinal-group: $arg + 1
+	-ms-flex-order: $arg
+	order: $arg
+
+@mixin transform($arg)
+	-webkit-transform: $arg
+	transform: $arg

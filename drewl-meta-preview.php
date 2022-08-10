@@ -15,8 +15,10 @@ defined( 'ABSPATH' ) || exit;
 
 
 
-class DrewlMetaPreviewPlugin {	
-
+class DrewlMetaPreviewPlugin {
+	/**
+	 * Define the core functionality of the plugin.
+	 */
 	public function __construct() {
 		add_action( 'init', function() {
 			load_plugin_textdomain( 'drewl-meta-preview', false,
@@ -73,12 +75,17 @@ class DrewlMetaPreviewPlugin {
 		} );
 	}
 
-
+	/**
+	 * Metabox rendering function
+	 */
 	public function meta_preview_callback( $post ) {
 		$classes = get_option( 'drewl_mp_options', 'dmp1 dmp2 dmp3 dmp4 dmp5 dmp6' );
 		include_once plugin_dir_path( __FILE__ ) . '/admin/partials/container.php';
 	}
 
+	/**
+	 * Format URLs based on social network
+	 */
 	private function format_url( $meta, $name ) {
 		$url = parse_url( $meta['url'] );
 		$out = '';
@@ -102,35 +109,26 @@ class DrewlMetaPreviewPlugin {
 		return $out;
 	}
 
+	/**
+	 * Widgets rendering function
+	 */
 	private function render ( $meta ) {
 		$names = array( 'Google', 'Facebook', 'Twitter', 'LinkedIn', 'Pinterest', 'Slack' );
 		ob_start();
-		?>
-
-		<?php foreach ( $names as $name ): ?>
-			<div class="drewl-mp-card">
-				<?php echo $name; ?>
-				<div class="drewl-mp-<?php echo strtolower( $name ); ?>">
-					<div class="drewl-image" style="background-image: url(<?php echo $meta['image']; ?>);"></div>
-					<div class="drewl-inner">
-						<span class="drewl-u">
-							<?php echo $this->format_url( $meta, $name ); ?>
-						</span>
-						<div class="drewl-t"><?php echo $meta['title']; ?></div>
-						<div class="drewl-d"><?php echo $meta['description']; ?></div>
-					</div>
-				</div>
-			</div>
-		<?php endforeach; ?>
-
-		<?php
+		include_once plugin_dir_path( __FILE__ ) . '/admin/partials/item.php';
 		return ob_get_clean();
 	}
 
+	/**
+	 * Couldn't find any meta-tags function
+	 */
 	private function no_meta_tags() {
 		die( '<div class="drewl-info">' . __( 'No meta-tags found. Install any SEO plugins or specify them manually in your theme\'s header.php file.', 'drewl-meta-preview' ) . '</div>' );
 	}
 
+	/**
+	 * Handle ajax request
+	 */
 	public function get_data() {
 		$url = get_permalink( $_GET['id'] );
 
@@ -190,7 +188,6 @@ class DrewlMetaPreviewPlugin {
 				if ( $property == 'og:site_name' )
 					$meta['name'] = $item->getAttribute( 'content' );
 			}
-			// title and meta-description?
 
 			if ( ( $rel = $item->getAttribute( 'rel' ) ) && $rel == 'icon' ) {
 				$meta['icon'] = $item->getAttribute( 'href' );

@@ -1,12 +1,22 @@
 
+@import 'mixins'
+
+
+
 #drewl-meta-preview
 	max-width: 600px
 	margin: 10px auto
-	min-height: 150px
+	border: 1px solid #edf0f2
+	border-radius: 14px
 
 	.drewl-info
 		text-align: center
-
+		margin-bottom: 53px
+	.drewl-title
+		color: #b8bbbf
+		font-weight: 500
+		font-size: 1.3em
+		margin-bottom: 0.8em
 
 	.drewl-icon
 		@extend %image
@@ -24,20 +34,25 @@
 			display: block
 			// padding-bottom: 60%
 .drewl-mp-card
-	margin: 6px 0 30px
+	position: relative
+	margin: 0 0 26px
+	padding: 0 0 26px
 	display: none
+	border-bottom: 1px solid #edf0f2
 .drewl-mp-controls
 	user-select: none
-	margin-bottom: 10px
 	overflow: hidden
+	border-bottom: 1px solid #edf0f2
+	padding: 20px 24px 14px
 	span
 		cursor: pointer
 		padding: 10px
-		margin: 0 2px
+		margin: 0 2px 6px
 		display: inline-block
 		border-radius: 30px
-		transition: background 0.2s
+		@include transition(background 0.2s)
 		border: 1px solid #cccccc
+		float: left
 	span:last-child
 		line-height: 17px
 		float: right
@@ -49,11 +64,11 @@
 		pointer-events: none
 		display: block
 	path
-		transition: fill 0.2s
-		// fill: #9fa2a6
-	// .active
-	// 	background: #c0c0c0
-	// 	path
+		@include transition(fill 0.2s)
+
+.drewl-mp-widgets
+	padding: 26px 28px 0
+	margin-bottom: -27px
 
 
 .dmp1
@@ -128,17 +143,13 @@
 	-webkit-box-orient: vertical
 	text-overflow: ellipsis
 %flex-column
-	display: -webkit-box
-	display: -ms-flexbox
-	display: flex
+	@include flex
 	-webkit-box-orient: vertical
 	-webkit-box-direction: normal
 	-ms-flex-direction: column
 	flex-direction: column
 %flex-last
-	-webkit-box-ordinal-group: 6
-	-ms-flex-order: 5
-	order: 5
+	@include flex-order(5)
 %three-dots
 	content: ''
 	display: inline-block
@@ -170,16 +181,12 @@
 		position: relative
 		span
 			color: #5f6368
-		// &:after
-		// 	@extend %three-dots
-		// 	margin: -3px 0 0 12px
-		// 	vertical-align: middle
 		&:after
 			@extend %three-dots
 			position: absolute
 			right: 0
 			top: -2px
-		// old version with a green arrow
+		// old version with a green down arrow
 		// &:after
 		// 	content: ''
 		// 	display: inline-block
@@ -312,8 +319,7 @@
 			position: absolute
 			right: 0
 			top: 0
-			-webkit-transform: rotate(90deg)
-			transform: rotate(90deg)
+			@include transform(rotate(90deg))
 	.drewl-d
 		display: none
 
@@ -355,6 +361,4 @@
 		color: #2c2d30
 
 
-
-@import 'mixins'
 

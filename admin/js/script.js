@@ -47,6 +47,9 @@ document.addEventListener( 'DOMContentLoaded', function() {
 			if ( index == 7 ) {
 				container.className = 'dmp1 dmp2 dmp3 dmp4 dmp5 dmp6';
 			} else {
+				if ( container.classList.length == 1 && container.classList.contains( 'dmp' + index ) )
+					return;
+				// toggle.toggle IE10+
 				container.classList.toggle( 'dmp' + index );
 			}
 			container.querySelector('input[name=drewl_mp_options]').value = container.className;
@@ -92,12 +95,6 @@ document.addEventListener( 'DOMContentLoaded', function() {
 			update_widgets();
 			doing_request = false;
 		} );
-
-		// jQuery.post( drewl_meta_preview.ajax_url + '?action=drewl_meta_preview_get_data&hash=' + hash + '&id=' + drewl_meta_preview.post_id, { content: p.innerHTML } ).done( function( data_ ) {
-		// 	data = data_;
-		// 	update_widgets();
-		// 	doing_request = false;
-		// } );
 	}
 	function request_data() {
 		if ( doing_request )
@@ -112,9 +109,6 @@ document.addEventListener( 'DOMContentLoaded', function() {
 				request_data_( content );
 			} );
 
-			// jQuery.get( drewl_meta_preview.site_url + '/?p=' + drewl_meta_preview.post_id ).done( function ( content ) {
-			// 	request_data_( content.yoast_head != undefined ? '<head>' + content.yoast_head + '</head>' : content );
-			// } );
 		} else {
 			request_data_( '' );
 		}

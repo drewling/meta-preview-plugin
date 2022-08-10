@@ -1,4 +1,1 @@
-<?php
-/**
- * Nothing to see here.
- */
+<?php // Silence is golden
