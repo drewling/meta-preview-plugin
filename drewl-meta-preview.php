@@ -79,7 +79,7 @@ class DrewlMetaPreviewPlugin {
 	 * Metabox rendering function
 	 */
 	public function meta_preview_callback( $post ) {
-		$classes = get_option( 'drewl_mp_options', 'dmp1 dmp2 dmp3 dmp4 dmp5 dmp6' );
+		$classes = get_option( 'drewl_mp_options', 'dmp1' );
 		include_once plugin_dir_path( __FILE__ ) . '/admin/partials/container.php';
 	}
 
