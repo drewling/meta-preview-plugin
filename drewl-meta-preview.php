@@ -73,6 +73,8 @@ class DrewlMetaPreviewPlugin {
 
 			update_option( 'drewl_mp_options', htmlentities( $_POST['drewl_mp_options'] ) );
 		} );
+
+		add_filter('script_loader_tag', array( $this, 'add_defer_attribute' ), 10, 2);	  
 	}
 
 	/**
@@ -208,6 +210,12 @@ class DrewlMetaPreviewPlugin {
 		}
 
 		exit;
+	}
+
+	public function add_defer_attribute($tag, $handle) {
+		if ( 'drewl-meta-preview' !== $handle )
+		  return $tag;
+		return str_replace( ' src', ' defer="defer" src', $tag );
 	}
 }
 
