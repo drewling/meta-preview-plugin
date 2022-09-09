@@ -145,64 +145,81 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	}
 } );
 
-// document.addEventListener('click', function(e){
-    // var title = document.querySelector('#yoast-google-preview-title-metabox span[data-text="true"]');
-	// if(e.target && e.target == title){
-        // console.log(title.innerHTML);
-		// Select the node that will be observed for mutations
-		// const targetNode = title;
-		// let checkDiv = setInterval(function () {
-		// 		console.log(title.innerHTML);
-		// 	}, 100
-		// );
-		// drewl_observer(targetNode);
-		// // let drewl_titles = document.getElementsByClassName('drewl-t');
-		// // for (let i = 0; i < drewl_titles.length; i++) {
-		// // 	drewl_titles[i].innerHTML = 'Ovaina click';
-		// // }
-// 	}
-// });
-
-
-// var title = document.querySelector('#yoast-google-preview-title-metabox span[data-text="true"]');
-// drewl_observer(targetNode);
-
-function drewl_observer(targetNode) {
+function drewl_observer( targetNode, field ) {
+	
+	let targetfield;
+	
 	// Options for the observer (which mutations to observe)
-	const config = { childList: true, characterData: true,  subtree: true };
+	const config = { 
+		childList: true, 
+		characterData: true, 
+		subtree: true 
+	};
 
 	// Callback function to execute when mutations are observed
-	const callback = (mutationList, observer) => {
-		for (const mutation of mutationList) {
-			// if (mutation.type === 'characterData') {
-				console.log('changed');
-				// return targetNode.innerHTML;
-				// let drewl_titles = document.getElementsByClassName('drewl-t');
-				// for (let i = 0; i < drewl_titles.length; i++) {
-				// 	drewl_titles[i].innerHTML = targetNode.innerHTML;
-				// }
+	const callback = ( mutationList, observer ) => {
+		for ( const mutation of mutationList ) {
+			// if (mutation.type === 'childList') {
+				if ( field === 'title' ) {
+					let drewl_titles = document.getElementsByClassName( 'drewl-t' );
+					if (
+						document.querySelector( '#yoast-google-preview-title-metabox span[data-text="true"]' ) !== null 
+						&& document.querySelector( '#yoast-google-preview-title-metabox span[data-text="true"]' ) !== undefined 
+					) {
+						for ( let i = 0; i < drewl_titles.length; i++ ) {
+							drewl_titles[i].innerHTML = document.querySelector( '#yoast-google-preview-title-metabox span[data-text="true"]' ).innerHTML;
+						}
+					}
+				}
+				if ( field === 'description' ) {
+					let drewl_descriptions = document.getElementsByClassName( 'drewl-d' );
+					if (
+						document.querySelector( '#yoast-google-preview-description-metabox span[data-text="true"]' ) !== null 
+						&& document.querySelector( '#yoast-google-preview-description-metabox span[data-text="true"]' ) !== undefined 
+					) {
+						for ( let i = 0; i < drewl_descriptions.length; i++ ) {
+							drewl_descriptions[i].innerHTML = document.querySelector( '#yoast-google-preview-description-metabox span[data-text="true"]' ).innerHTML;
+						}
+					}
+				}
 			// }
 		}
 	};
 
 	// Create an observer instance linked to the callback function
-	const observer = new MutationObserver(callback);
+	const observer = new MutationObserver( callback );
 
 	// Start observing the target node for configured mutations
-	observer.observe(targetNode, config);
+	observer.observe( targetNode, config );
 }
 
-window.onload = function() { // can also use window.addEventListener('load', (event) => {
-    var title = document.querySelector('#yoast-google-preview-title-metabox');
-	// var anotherTitle = document.querySelector('#yoast-snippet-preview-container :nth-child(1) > :nth-child(4) span');
-	// var b = anotherTitle.querySelector('div:nth-child(2)');
-	// console.log(anotherTitle.innerHTML);
-	// Select the node that will be observed for mutations
-	const targetNode = title;
-	drewl_observer(targetNode);
-	// let drewl_titles = document.getElementsByClassName('drewl-t');
-	// for (let i = 0; i < drewl_titles.length; i++) {
-	// 	drewl_titles[i].innerHTML = 'Ovaina click';
-	// }
+function drewl_change_slug( slug ) {
+	let drewl_slugs = document.getElementsByClassName( 'drewl-u' );
 	
+	for ( let i = 0; i < drewl_slugs.length; i++ ) {
+		let slug_obj = drewl_slugs[i];
+		if ( slug_obj.closest( '.drewl-mp-google' ) !== null ) { // targets only google preview
+			let slug_str = slug_obj.querySelector( 'span' ).innerHTML;
+			let arr = slug_str.split( '›' );
+			const arr_length = arr.length;
+			arr[arr_length - 1] = ' ' + slug;
+			let s = arr.join( '›' );
+			slug_obj.querySelector( 'span' ).innerHTML = s;
+		}
+	}
+}
+
+window.onload = function() { 
+    let title = document.querySelector( '#yoast-google-preview-title-metabox' );
+	let slug = document.querySelector( '#yoast-google-preview-slug-metabox' );
+	let description = document.querySelector( '#yoast-google-preview-description-metabox' );
+
+	// Handles slug changes
+	slug.addEventListener( 'keyup', () => {
+		drewl_change_slug( slug.value );
+	} );
+
+	// Handles title and description changes
+	drewl_observer( title, 'title' );
+	drewl_observer( description, 'description' );
 };
