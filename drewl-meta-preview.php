@@ -13,8 +13,6 @@
 
 defined( 'ABSPATH' ) || exit;
 
-
-
 class DrewlMetaPreviewPlugin {
 	/**
 	 * Define the core functionality of the plugin.
