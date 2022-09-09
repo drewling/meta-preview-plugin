@@ -74,7 +74,9 @@ class DrewlMetaPreviewPlugin {
 			update_option( 'drewl_mp_options', htmlentities( $_POST['drewl_mp_options'] ) );
 		} );
 
-		add_filter('script_loader_tag', array( $this, 'add_defer_attribute' ), 10, 2);	  
+		add_filter('script_loader_tag', array( $this, 'add_defer_attribute' ), 10, 2);
+
+		add_action( 'wp_head', array( $this, 'handle_open_graph_tags' ) );
 	}
 
 	/**
@@ -216,6 +218,26 @@ class DrewlMetaPreviewPlugin {
 		if ( 'drewl-meta-preview' !== $handle )
 		  return $tag;
 		return str_replace( ' src', ' defer="defer" src', $tag );
+	}
+
+	/**
+	 * Fallback if Yoast is not installed
+	 */
+	public function handle_open_graph_tags() {
+		global $post;
+
+		$meta_description = ( $post->post_excerpt != '' ) ? $post->post_excerpt : wp_trim_words( $post->post_content, 10 );
+
+		if ( ! defined( 'WPSEO_VERSION' ) ) {
+			echo '<!-- og tags -->' . PHP_EOL;
+			echo '<meta property="og:url"                content="' . get_permalink( $post->ID ) . '" />' . PHP_EOL;
+			echo '<meta property="og:type"               content="' . $post->post_type . '" />' . PHP_EOL;
+			echo '<meta property="og:title"              content="' . $post->post_title . '" />' . PHP_EOL;
+			echo '<meta property="og:description"        content="' . $meta_description . '" />' . PHP_EOL;
+			echo '<meta property="og:image"              content="' . get_the_post_thumbnail_url( $post->ID, 'large' ) . '" />' . PHP_EOL;
+			echo '<meta property="og:site_name"          content="' . get_bloginfo( 'name' ) . '" />' . PHP_EOL;
+			echo '<!-- og tags -->' . PHP_EOL;
+		}
 	}
 }
 
