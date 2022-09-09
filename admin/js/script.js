@@ -200,11 +200,9 @@ function drewl_change_slug( slug ) {
 		let slug_obj = drewl_slugs[i];
 		if ( slug_obj.closest( '.drewl-mp-google' ) !== null ) { // targets only google preview
 			let slug_str = slug_obj.querySelector( 'span' ).innerHTML;
-			let arr = slug_str.split( '›' );
-			const arr_length = arr.length;
-			arr[arr_length - 1] = ' ' + slug;
-			let s = arr.join( '›' );
-			slug_obj.querySelector( 'span' ).innerHTML = s;
+			let reg_search = /[a-z-0-9]*$/;
+			let res = slug_str.replace( reg_search, slug );
+			slug_obj.querySelector( 'span' ).innerHTML = res;
 		}
 	}
 }
