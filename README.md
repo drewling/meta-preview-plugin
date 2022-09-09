@@ -28,7 +28,7 @@ To display the preview, create a new post or page, assign it a feature image and
 
 ## Contributing
 
-Anyone is welcome to contribute to Drewl Meta Preview. Please read the [guidelines for contributing](https://githb.com/) to this repository.
+Anyone is welcome to contribute to Drewl Meta Preview. Please read the [guidelines for contributing](https://github.com/drewling/wordpress-serp-preview-plugin/blob/master/CONTRIBUTING.md) to this repository.
 
 There are various ways you can contribute:
 

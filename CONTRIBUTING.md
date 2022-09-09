@@ -9,7 +9,7 @@ We love your input! We want to make contributing to this project as easy and tra
 
 ## Code of Conduct
 
-Please refer to our [Code of Conduct](https://github.com/drewling).
+Please refer to our [Code of Conduct](https://github.com/drewling/wordpress-serp-preview-plugin/blob/master/CODE_OF_CONDUCT.md).
 
 ## Report bugs using Github's issues
 
