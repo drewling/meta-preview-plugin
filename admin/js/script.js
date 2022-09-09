@@ -147,8 +147,6 @@ document.addEventListener( 'DOMContentLoaded', function() {
 
 function drewl_observer( targetNode, field ) {
 	
-	let targetfield;
-	
 	// Options for the observer (which mutations to observe)
 	const config = { 
 		childList: true, 
