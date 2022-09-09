@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/drewling/wordpress-serp-preview-plugin/issues"
   },
-  "homepage": "https://github.com/drewling/wordpress-serp-preview-plugin#readme"
+  "homepage": "https://github.com/drewling/wordpress-serp-preview-plugin#readme",
+  "devDependencies": {
+    "eslint": "^8.23.0"
+  }
 }
