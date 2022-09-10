@@ -8,9 +8,9 @@ This plugin uses Meta tags (OG tags), so to be able to properly work it will nee
 
 ## Installation
 
-There are 2 ways to install the plugin: 
+There are 2 ways to install the plugin:
 
-* Download the .zip file from the [Wordpress Plugin database](https://wordpress.org/plugins/drewl-meta-preview/) (recommended) 
+* Download the .zip file from the [Wordpress Plugin database](https://wordpress.org/plugins/drewl-meta-preview/) (recommended)
 * Clone this GitHub repository.
 
 ### Cloning the GitHub repository

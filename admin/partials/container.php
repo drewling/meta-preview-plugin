@@ -29,7 +29,7 @@ defined( 'ABSPATH' ) || exit;
 			<?php _e( 'Preview all', 'drewl-meta-preview' ); ?>
 		</span>
 	</div>
-	
+
 	<div class="drewl-mp-widgets">
 		<div class="drewl-info">
 		<?php if ( $post->post_status == 'auto-draft' ): ?>

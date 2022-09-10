@@ -22,7 +22,7 @@ Pull requests are the best way to propose changes to the codebase. We actively w
 1. Search for existing Issues and PRs before creating your own.
 2. Fork the repository to your own GitHub account
 3. Clone the project on your machine
-4. Create a branch locally 
+4. Create a branch locally
 5. Commit changes to the branch
 6. Push changes to your fork
 7. Submit a pull request to the upstream repository with a descriptive title and description

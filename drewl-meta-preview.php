@@ -49,7 +49,7 @@ class DrewlMetaPreviewPlugin {
 					filemtime( plugin_dir_path( __FILE__ ) . '/admin/js/script.js' ), true
 				);
 				wp_localize_script( 'drewl-meta-preview', 'drewl_meta_preview',
-					array( 
+					array(
 						'ajax_url'	=> admin_url( 'admin-ajax.php' ),
 						'post_id'	=> $post->ID,
 						'site_url'	=> get_site_url(),
