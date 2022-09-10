@@ -1,4 +1,5 @@
 // /* global wp, drewl_meta_preview */
+
 document.addEventListener( 'DOMContentLoaded', () => {
 	let data = false;
 	let container = null;
