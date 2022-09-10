@@ -1,6 +1,5 @@
-
+// /* global wp, drewl_meta_preview */
 document.addEventListener( 'DOMContentLoaded', () => {
-
 	let data = false;
 	let container = null;
 	let init_status = document.getElementById( 'original_post_status' ).value;
@@ -60,7 +59,9 @@ document.addEventListener( 'DOMContentLoaded', () => {
 		if ( window.MutationObserver == undefined )
 			return;
 
-		let observer = new MutationObserver( ( mutations, observer ) => {
+		// eslint-disable-next-line no-unused-vars
+		let observer = new MutationObserver((mutations, observer) => {
+			// eslint-disable-next-line no-unused-vars
 			mutations.forEach( ( record ) => {
 				// https://github.com/WordPress/gutenberg/issues/17632
 				is_saving = wp.data.select( 'core/editor' ).isSavingPost() && ! wp.data.select( 'core/editor' ).isAutosavingPost();
@@ -104,7 +105,6 @@ document.addEventListener( 'DOMContentLoaded', () => {
 		let status = wp.data.select( 'core/editor' ).getEditedPostAttribute( 'status' );
 
 		if ( ( init_status == 'draft' && !status ) || status == 'draft' ) {
-			// http://localhost/meta-preview/wp-content/plugins/wordpress-serp-preview-plugin/response.json
 			ajax( 'GET', drewl_meta_preview.site_url + '/?p=' + drewl_meta_preview.post_id, '', ( content ) => {
 				requestData_( content );
 			} );
@@ -131,26 +131,28 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
 /**
  * Observes changes on 'targetNode' and update the value of 'field'
- * @param object targetNode 
- * @param string field 
+ * @param object targetNode
+ * @param string field
  */
 let drewlObserver = ( targetNode, field ) => {
-	
+
 	// Options for the observer (which mutations to observe)
-	const config = { 
-		childList: true, 
-		characterData: true, 
-		subtree: true 
+	const config = {
+		childList: true,
+		characterData: true,
+		subtree: true
 	};
 
 	// Callback function to execute when mutations are observed
-	const callback = ( mutationList, observer ) => {
+	// eslint-disable-next-line no-unused-vars
+	const callback = (mutationList, observer) => {
+		// eslint-disable-next-line no-unused-vars
 		for ( const mutation of mutationList ) {
 			if ( field === 'title' ) {
 				let drewl_titles = document.getElementsByClassName( 'drewl-t' );
 				if (
-					document.querySelector( '#yoast-google-preview-title-metabox span[data-text="true"]' ) !== null 
-					&& document.querySelector( '#yoast-google-preview-title-metabox span[data-text="true"]' ) !== undefined 
+					document.querySelector( '#yoast-google-preview-title-metabox span[data-text="true"]' ) !== null
+					&& document.querySelector( '#yoast-google-preview-title-metabox span[data-text="true"]' ) !== undefined
 				) {
 					for ( let i = 0; i < drewl_titles.length; i++ ) {
 						drewl_titles[i].innerHTML = document.querySelector( '#yoast-google-preview-title-metabox span[data-text="true"]' ).innerHTML;
@@ -160,8 +162,8 @@ let drewlObserver = ( targetNode, field ) => {
 			if ( field === 'description' ) {
 				let drewl_descriptions = document.getElementsByClassName( 'drewl-d' );
 				if (
-					document.querySelector( '#yoast-google-preview-description-metabox span[data-text="true"]' ) !== null 
-					&& document.querySelector( '#yoast-google-preview-description-metabox span[data-text="true"]' ) !== undefined 
+					document.querySelector( '#yoast-google-preview-description-metabox span[data-text="true"]' ) !== null
+					&& document.querySelector( '#yoast-google-preview-description-metabox span[data-text="true"]' ) !== undefined
 				) {
 					for ( let i = 0; i < drewl_descriptions.length; i++ ) {
 						drewl_descriptions[i].innerHTML = document.querySelector( '#yoast-google-preview-description-metabox span[data-text="true"]' ).innerHTML;
@@ -180,11 +182,11 @@ let drewlObserver = ( targetNode, field ) => {
 
 /**
  * Changes slug in the meta preview section as the user changes the Yoast slug
- * @param title slug 
+ * @param title slug
  */
 let drewlChangeSlug = ( slug ) => {
 	let drewl_slugs = document.getElementsByClassName( 'drewl-u' );
-	
+
 	for ( let i = 0; i < drewl_slugs.length; i++ ) {
 		let slug_obj = drewl_slugs[i];
 		if ( slug_obj.closest( '.drewl-mp-google' ) !== null ) { // targets only google preview
@@ -196,7 +198,7 @@ let drewlChangeSlug = ( slug ) => {
 	}
 }
 
-window.onload = () => { 
+window.onload = () => {
     let title = document.querySelector( '#yoast-google-preview-title-metabox' );
 	let slug = document.querySelector( '#yoast-google-preview-slug-metabox' );
 	let description = document.querySelector( '#yoast-google-preview-description-metabox' );
