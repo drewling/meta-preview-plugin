@@ -1,34 +1,32 @@
+/* global wp, drewl_meta_preview */
+/*eslint no-undef: "error"*/
+document.addEventListener( 'DOMContentLoaded', () => {
+	let data = false;
+	let container = null;
+	let init_status = document.getElementById( 'original_post_status' ).value;
 
-document.addEventListener( 'DOMContentLoaded', function() {
+	let hash = '';
+	let doing_request = false;
 
-	var data = false;
-	var container = null;
-	var init_status = document.getElementById( 'original_post_status' ).value;
+	let was_saving = false;
+	let is_saving;
 
-	var hash = '';
-	var doing_request = false;
-
-	var was_saving = false;
-	var is_saving;
-
-
-	var interval = setInterval( function() {
+	let interval = setInterval( () => {
 		container = document.getElementById( 'drewl-meta-preview' );
 		if ( container ) {
 			clearInterval( interval );
+			container.children[0].addEventListener( 'click', handleClidk );
 
-			container.children[0].addEventListener( 'click', handle_click );
-
-			observe_btn();
-			update_widgets();
+			observeBtn();
+			updateWidgets();
 		}
 	}, 300 );
 
-	function ajax( type, url, data, cb ) {
-		var xhr = new XMLHttpRequest();
+	let ajax = ( type, url, data, cb ) => {
+		let xhr = new XMLHttpRequest();
 		xhr.open( type, url );
 
-		xhr.onreadystatechange = function() {
+		xhr.onreadystatechange = function () {
 			if( xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 ) {
 				cb( this.responseText );
 			}
@@ -36,10 +34,10 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		xhr.send( data );
 	}
 
-	function handle_click( e ) {
+	let handleClidk = ( e ) => {
 		if ( e.target.nodeName == 'SPAN' ) {
-			var index = 1;
-			var node = e.target;
+			let index = 1;
+			let node = e.target;
 			while ( ( node = node.previousElementSibling ) ) {
 				index++;
 			}
@@ -56,66 +54,69 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		}
 	}
 
-	function observe_btn() {
+	let observeBtn = () => {
 		// MutationObserver IE11+
 		if ( window.MutationObserver == undefined )
 			return;
 
-		var observer = new MutationObserver( function( mutations, observer ) {
-			mutations.forEach( function( record ) {
+		// eslint-disable-next-line no-unused-vars
+		let observer = new MutationObserver((mutations, observer) => {
+			// eslint-disable-next-line no-unused-vars
+			mutations.forEach( ( record ) => {
 				// https://github.com/WordPress/gutenberg/issues/17632
 				is_saving = wp.data.select( 'core/editor' ).isSavingPost() && ! wp.data.select( 'core/editor' ).isAutosavingPost();
 
-				var is_done_saving = was_saving && !is_saving;
+				let is_done_saving = was_saving && !is_saving;
 				was_saving = is_saving;
 
 				if ( is_done_saving ) {
-					request_data();
+					requestData();
 				}
 			} );
 		} );
 
-		var publish_btn = document.querySelector( '.editor-post-publish-button__button' );
+		let publish_btn = document.querySelector( '.editor-post-publish-button__button' );
 
 		observer.observe( publish_btn, {
 			attributes: true
 		} );
 	}
 
-	function request_data_( content ) {
+	let requestData_ = ( content ) => {
 		// WF firewall XSS
-		var p = document.createElement( 'p' );
+		let p = document.createElement( 'p' );
 		p.textContent = content;
 		// FormData IE10+
-		var fd = new FormData();
+		let fd = new FormData();
 		fd.append( 'content', p.innerHTML );
 
-		ajax( 'POST', drewl_meta_preview.ajax_url + '?action=drewl_meta_preview_get_data&hash=' + hash + '&id=' + drewl_meta_preview.post_id, fd, function( data_ ) {
+		ajax( 'POST', drewl_meta_preview.ajax_url + '?action=drewl_meta_preview_get_data&hash=' + hash + '&id=' + drewl_meta_preview.post_id, fd, ( data_ ) => {
 			data = data_;
-			update_widgets();
+			updateWidgets();
 			doing_request = false;
 		} );
 	}
-	function request_data() {
+
+	let requestData = () => {
 		if ( doing_request )
 			return;
 
 		doing_request = true;
-		var status = wp.data.select( 'core/editor' ).getEditedPostAttribute( 'status' );
+
+		let status = wp.data.select( 'core/editor' ).getEditedPostAttribute( 'status' );
 
 		if ( ( init_status == 'draft' && !status ) || status == 'draft' ) {
-			// http://localhost/meta-preview/wp-content/plugins/wordpress-serp-preview-plugin/response.json
-			ajax( 'GET', drewl_meta_preview.site_url + '/?p=' + drewl_meta_preview.post_id, '', function( content ) {
-				request_data_( content );
+			ajax( 'GET', drewl_meta_preview.site_url + '/?p=' + drewl_meta_preview.post_id, '', ( content ) => {
+				requestData_( content );
 			} );
 
 		} else {
-			request_data_( '' );
+			requestData_( '' );
 		}
 	}
 
 
-	function update_widgets() {
+	let updateWidgets = () => {
 		if ( ! container || ! data )
 			return;
 
@@ -125,7 +126,90 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	}
 
 	if ( init_status != 'auto-draft' ) {
-		request_data();
+		requestData();
 	}
-
 } );
+
+/**
+ * Observes changes on 'targetNode' and update the value of 'field'
+ * @param object targetNode
+ * @param string field
+ */
+let drewlObserver = ( targetNode, field ) => {
+
+	// Options for the observer (which mutations to observe)
+	const config = {
+		childList: true,
+		characterData: true,
+		subtree: true
+	};
+
+	// Callback function to execute when mutations are observed
+	// eslint-disable-next-line no-unused-vars
+	const callback = (mutationList, observer) => {
+		// eslint-disable-next-line no-unused-vars
+		for ( const mutation of mutationList ) {
+			if ( field === 'title' ) {
+				let drewl_titles = document.getElementsByClassName( 'drewl-t' );
+				if (
+					document.querySelector( '#yoast-google-preview-title-metabox span[data-text="true"]' ) !== null
+					&& document.querySelector( '#yoast-google-preview-title-metabox span[data-text="true"]' ) !== undefined
+				) {
+					for ( let i = 0; i < drewl_titles.length; i++ ) {
+						drewl_titles[i].innerHTML = document.querySelector( '#yoast-google-preview-title-metabox span[data-text="true"]' ).innerHTML;
+					}
+				}
+			}
+			if ( field === 'description' ) {
+				let drewl_descriptions = document.getElementsByClassName( 'drewl-d' );
+				if (
+					document.querySelector( '#yoast-google-preview-description-metabox span[data-text="true"]' ) !== null
+					&& document.querySelector( '#yoast-google-preview-description-metabox span[data-text="true"]' ) !== undefined
+				) {
+					for ( let i = 0; i < drewl_descriptions.length; i++ ) {
+						drewl_descriptions[i].innerHTML = document.querySelector( '#yoast-google-preview-description-metabox span[data-text="true"]' ).innerHTML;
+					}
+				}
+			}
+		}
+	};
+
+	// Create an observer instance linked to the callback function
+	const observer = new MutationObserver( callback );
+
+	// Start observing the target node for configured mutations
+	observer.observe( targetNode, config );
+}
+
+/**
+ * Changes slug in the meta preview section as the user changes the Yoast slug
+ * @param title slug
+ */
+let drewlChangeSlug = ( slug ) => {
+	let drewl_slugs = document.getElementsByClassName( 'drewl-u' );
+
+	for ( let i = 0; i < drewl_slugs.length; i++ ) {
+		let slug_obj = drewl_slugs[i];
+		if ( slug_obj.closest( '.drewl-mp-google' ) !== null ) { // targets only google preview
+			let slug_str = slug_obj.querySelector( 'span' ).innerHTML;
+			let reg_search = /[a-z-0-9]*$/;
+			let res = slug_str.replace( reg_search, slug );
+			slug_obj.querySelector( 'span' ).innerHTML = res;
+		}
+	}
+}
+
+window.onload = () => {
+    let title = document.querySelector( '#yoast-google-preview-title-metabox' );
+	let slug = document.querySelector( '#yoast-google-preview-slug-metabox' );
+	let description = document.querySelector( '#yoast-google-preview-description-metabox' );
+
+	// Handles slug changes
+	slug.addEventListener( 'keyup', () => {
+		drewlChangeSlug( slug.value );
+	} );
+
+	// Handles title and description changes
+	drewlObserver( title, 'title' );
+	drewlObserver( description, 'description' );
+};

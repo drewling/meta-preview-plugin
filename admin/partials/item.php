@@ -15,7 +15,6 @@ defined( 'ABSPATH' ) || exit;
 				<span class="drewl-u">
 					<?php echo $this->format_url( $meta, $name ); ?>
 				</span>
-				
 				<div class="drewl-t"><?php echo $meta['title']; ?></div>
 				<div class="drewl-d"><?php echo $meta['description']; ?></div>
 			</div>

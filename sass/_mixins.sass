@@ -17,3 +17,13 @@
 @mixin transform($arg)
 	-webkit-transform: $arg
 	transform: $arg
+
+@mixin on-hover-active-icon()
+	&:hover
+		background-color: #333
+		border-color: #333
+
+@mixin on-hover-inactive-icon()
+	&:hover
+		background-color: #edf0f2
+		border-color: #edf0f2
