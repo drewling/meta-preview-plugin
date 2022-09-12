@@ -241,6 +241,4 @@ class DrewlMetaPreviewPlugin {
 
 new DrewlMetaPreviewPlugin();
 
-
-
 ?>

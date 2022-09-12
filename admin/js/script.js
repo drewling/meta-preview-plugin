@@ -15,7 +15,6 @@ document.addEventListener( 'DOMContentLoaded', () => {
 		container = document.getElementById( 'drewl-meta-preview' );
 		if ( container ) {
 			clearInterval( interval );
-
 			container.children[0].addEventListener( 'click', handleClidk );
 
 			observeBtn();
@@ -103,6 +102,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 			return;
 
 		doing_request = true;
+
 		let status = wp.data.select( 'core/editor' ).getEditedPostAttribute( 'status' );
 
 		if ( ( init_status == 'draft' && !status ) || status == 'draft' ) {
