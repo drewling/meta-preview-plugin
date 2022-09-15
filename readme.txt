@@ -1,6 +1,6 @@
 === Drewl Meta Preview ===
 Contributors: drewl
-Tags: preview, seo
+Tags: preview, social, sharing, seo
 Donate link: -
 Requires at least: 5.4
 Tested up to: 6.0.2
