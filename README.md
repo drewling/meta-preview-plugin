@@ -4,7 +4,7 @@ The Drewl Meta Preview plugin will display how your content (post or page) will 
 
 ## Prerequisites
 
-This plugin uses Meta tags (OG tags), so to be able to properly work it will need a tier plugin that will generate these Meta tags or you can manually specify them in your theme's header template.
+This plugin uses Meta tags (OG tags), so to function properly it will need a tier plugin generates these Meta tags. Alternatively, you can manually specify them in your theme's header template.
 
 ## Installation
 
@@ -24,7 +24,7 @@ cd wordpress-serp-preview-plugin
 
 ## Usage
 
-To display the preview, create a new post or page, assign it a feature image and save the content. The preview will display in a __Meta Preview__ section in the edit screen.
+To display the preview, create a new post or page, then assign it a featured image and save the content. The preview will display in a __Meta Preview__ section in the edit screen.
 
 ## Contributing
 
