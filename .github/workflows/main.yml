@@ -27,4 +27,4 @@ jobs:
       - name: Install modules
         run: npm install
       - name: Run ESLint
-        run: npx eslint admin/js/script.js
+        run: npx eslint drewl-meta-preview/admin/js/script.js
