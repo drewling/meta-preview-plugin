@@ -36,3 +36,6 @@ There are various ways you can contribute:
 * Send us a Pull Request with your bug fixes and/or new features.
 * Translate Drewl Meta Preview into different languages.
 * Provide feedback and suggestions on enhancements.
+
+## Let's chat
+[<img width="1776" alt="GitHub_Banner" src="https://user-images.githubusercontent.com/13052749/190631836-cf9ed322-dae8-4032-8d0c-7b8e738465f8.png">](https://drewl.com/contact)
