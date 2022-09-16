@@ -15,7 +15,7 @@ There are 2 ways to install the plugin:
 
 ### Cloning the GitHub repository
 
-To be able to clone this repository you will need to have Git installed on you computer. When Git is installed, got to the _'wp-content/plugins'_ folder of your Wordpress installation and run the following commands:
+To be able to clone this repository you will need to have Git installed on you computer. Once Git is installed, go to the _'wp-content/plugins'_ folder of your Wordpress installation and run the following commands:
 
 ```
 git clone https://github.com/drewling/wordpress-serp-preview-plugin.git
