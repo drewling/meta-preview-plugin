@@ -4,7 +4,7 @@ The Drewl Meta Preview plugin will display how your content (post or page) will 
 
 ## Prerequisites
 
-This plugin uses Meta tags (OG tags), so to be able to properly work it will need a tier plugin that will generate these Meta tags or you can manually specify them in your theme's header template.
+This plugin uses Meta tags (OG tags), so to function properly it will need a tier plugin generates these Meta tags. Alternatively, you can manually specify them in your theme's header template.
 
 ## Installation
 
@@ -15,7 +15,7 @@ There are 2 ways to install the plugin:
 
 ### Cloning the GitHub repository
 
-To be able to clone this repository you will need to have Git installed on you computer. When Git is installed, got to the _'wp-content/plugins'_ folder of your Wordpress installation and run the following commands:
+To be able to clone this repository you will need to have Git installed on you computer. Once Git is installed, go to the _'wp-content/plugins'_ folder of your Wordpress installation and run the following commands:
 
 ```
 git clone https://github.com/drewling/wordpress-serp-preview-plugin.git
@@ -24,7 +24,7 @@ cd wordpress-serp-preview-plugin
 
 ## Usage
 
-To display the preview, create a new post or page, assign it a feature image and save the content. The preview will display in a __Meta Preview__ section in the edit screen.
+To display the preview, create a new post or page, then assign it a featured image and save the content. The preview will display in a __Meta Preview__ section in the edit screen.
 
 ## Contributing
 
@@ -36,3 +36,6 @@ There are various ways you can contribute:
 * Send us a Pull Request with your bug fixes and/or new features.
 * Translate Drewl Meta Preview into different languages.
 * Provide feedback and suggestions on enhancements.
+
+## Let's chat
+[<img width="1776" alt="GitHub_Banner" src="https://user-images.githubusercontent.com/13052749/190631836-cf9ed322-dae8-4032-8d0c-7b8e738465f8.png">](https://drewl.com/contact)
