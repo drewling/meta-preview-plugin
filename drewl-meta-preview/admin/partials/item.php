@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || exit;
 <?php foreach ( $names as $name ): ?>
 	<div class="drewl-mp-card">
 		<div class="drewl-title">
-			<span class="title-icon <?php echo strtolower($name); ?>"></span>
+			<span><i class="title-icon <?php echo strtolower($name); ?>"></i></span>
 			<?php echo $name; ?>
 		</div>
 

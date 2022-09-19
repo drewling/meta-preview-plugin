@@ -104,8 +104,9 @@ class DrewlMetaPreviewPlugin {
 		}
 
 		if ( $name == 'Slack' ) {
-			$out = ( $meta['name'] ? $meta['name'] : $url['scheme'] . '://' . $url['host'] );
-			$out = '<span class="drewl-icon" style="background-image: url(' . $meta['icon'] . ');"></span>' . $out;
+			$out = $url['host'];
+			$icon = $url['icon'] ?? plugin_dir_url( __FILE__ ) . 'admin/images/favico-holder.png';
+			$out = '<span class="drewl-icon" style="background-image: url(' . $icon . ');"></span>' . $out;
 		}
 
 		return $out;

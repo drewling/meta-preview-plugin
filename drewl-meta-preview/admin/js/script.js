@@ -35,9 +35,9 @@ document.addEventListener( 'DOMContentLoaded', () => {
 	}
 
 	let handleClidk = ( e ) => {
-		if ( e.target.nodeName == 'IMG' || e.target.nodeName == 'SPAN' ) {
+		if ( e.target.nodeName == 'I' || e.target.nodeName == 'SPAN' ) {
 			let index = 1;
-			let node = e.target.nodeName == 'IMG' ? e.target.parentElement : e.target;
+			let node = e.target.nodeName == 'I' ? e.target.parentElement : e.target;
 			while ( ( node = node.previousElementSibling ) ) {
 				index++;
 			}

@@ -11,35 +11,44 @@
 		text-align: center
 		margin-bottom: 53px
 	.drewl-title
+		display: flex
+		justify-content: start
+		align-content: center
 		color: #313233
 
 		font-weight: 400
 		font-size: 1.3em
 		margin-bottom: 0.8em
 
-		.title-icon
+		span
 			display: inline-block
 			width: 20px
 			height: 20px
 			padding-right: 12px
 			border-right: 1px solid #D9D9D9
 			margin-right: 12px
-			margin-bottom: -4px
-			background-repeat: no-repeat
-			background-size: 20px 20px
+			margin-bottom: -10px
 
-		.title-icon.google 
-			background-image: url(../images/google.png)
-		.title-icon.facebook 
-			background-image: url(../images/facebook.png)
-		.title-icon.twitter 
-			background-image: url(../images/twitter.png)
-		.title-icon.linkedin 
-			background-image: url(../images/linkedin.png)
-		.title-icon.pinterest 
-			background-image: url(../images/pinterest.png)
-		.title-icon.slack 
-			background-image: url(../images/slack.png)					
+			.title-icon
+				display: inline-block
+				width: 20px
+				height: 20px
+				background-repeat: no-repeat
+				background-size: 40px 20px
+				background-position: left top
+
+			.title-icon.google
+				background-image: url(../images/google.png)
+			.title-icon.facebook
+				background-image: url(../images/facebook.png)
+			.title-icon.twitter
+				background-image: url(../images/twitter.png)
+			.title-icon.linkedin
+				background-image: url(../images/linkedin.png)
+			.title-icon.pinterest
+				background-image: url(../images/pinterest.png)
+			.title-icon.slack
+				background-image: url(../images/slack.png)
 
 
 	.drewl-icon
@@ -55,7 +64,7 @@
 		&:after
 			content: ''
 			display: block
-			
+
 .drewl-mp-card
 	position: relative
 	margin: 0 0 26px
@@ -67,17 +76,17 @@
 	overflow: hidden
 	border-bottom: 1px solid #edf0f2
 	padding: 27px 24px 0
-	
+
 	span
 		cursor: pointer
-		margin: 0 10px 0
+		margin: 0 10px
 		display: inline-block
 		text-align: center
 		width: 36px
 		float: left
-		padding: 0 5px 20px
+		padding: 0 0px 17px
 		border-bottom: 3px solid transparent
-		// img 
+		// img
 		// 	display: block
 		// 	margin: 0
 		// 	width: 20px
@@ -85,33 +94,36 @@
 		// 	padding: 0 5px 20px
 		// 	border-bottom: 3px solid transparent
 		// 	@include on-hover-inactive-icon
+		&:nth-child(1)
+			margin-left: 0
 
-	.control-icon
-		display: inline-block
-		width: 25px
-		height: 25px
-		background-repeat: no-repeat
-		background-size: 25px 25px
-		background-position: center top
+		&:hover
+			@include on-hover-inactive-icon()
 
-	.control-icon.google 
-		background-image: url(../images/google-off.png)
-		@include on-hover-inactive-icon('google')
-	.control-icon.facebook
-		background-image: url(../images/facebook-off.png)
-		@include on-hover-inactive-icon('facebook')
-	.control-icon.twitter 
-		background-image: url(../images/twitter-off.png)
-		@include on-hover-inactive-icon('twitter')
-	.control-icon.linkedin 
-		background-image: url(../images/linkedin-off.png)
-		@include on-hover-inactive-icon('linkedin')
-	.control-icon.pinterest 
-		background-image: url(../images/pinterest-off.png)
-		@include on-hover-inactive-icon('pinterest')
-	.control-icon.slack 
-		background-image: url(../images/slack-off.png)
-		@include on-hover-inactive-icon('slack')
+		.control-icon
+			display: inline-block
+			width: 20px
+			height: 20px
+			background-repeat: no-repeat
+			background-size: 40px 20px
+			background-position: -20px top
+
+		.control-icon.google
+			background-image: url(../images/google.png)
+		.control-icon.facebook
+			background-image: url(../images/facebook.png)
+		.control-icon.twitter
+			background-image: url(../images/twitter.png)
+			@include on-hover-inactive-icon()
+		.control-icon.linkedin
+			background-image: url(../images/linkedin.png)
+			@include on-hover-inactive-icon()
+		.control-icon.pinterest
+			background-image: url(../images/pinterest.png)
+			@include on-hover-inactive-icon()
+		.control-icon.slack
+			background-image: url(../images/slack.png)
+			@include on-hover-inactive-icon()
 
 	span:last-child
 		line-height: 17px
@@ -120,16 +132,19 @@
 		text-align: center
 		font-size: 14px
 		font-weight: 700
-		padding-bottom: 28px
+		padding-bottom: 25px
 		border-bottom: 3px solid transparent
-		
+
+		&:hover
+			border-color: #FFD12F
+
 		svg
 			display: none
 
 	svg
 		pointer-events: none
-		display: block	
-		
+		display: block
+
 .drewl-mp-widgets
 	padding: 26px 28px 0
 	margin-bottom: -27px
@@ -137,44 +152,49 @@
 
 .dmp1
 	.drewl-mp-controls span:nth-child(1)
-		background-image: url(../images/google.png)
-		border-color: #FFD12F
+		@include active-icon
+		&:hover
+			@include on-hover-active-icon
 	.drewl-mp-card:nth-child(1)
 		display: block
 .dmp2
 	.drewl-mp-controls span:nth-child(2)
-		background-image: url(../images/facebook.png)
-		border-color: #FFD12F
+		@include active-icon
+		&:hover
+			@include on-hover-active-icon
 	.drewl-mp-card:nth-child(2)
 		display: block
 .dmp3
 	.drewl-mp-controls span:nth-child(3)
-		background-image: url(../images/twitter.png)
-		border-color: #FFD12F
+		@include active-icon
+		&:hover
+			@include on-hover-active-icon
 	.drewl-mp-card:nth-child(3)
 		display: block
 .dmp4
 	.drewl-mp-controls span:nth-child(4)
-		background-image: url(../images/linkedin.svg)
-		border-color: #FFD12F
+		@include active-icon
+		&:hover
+			@include on-hover-active-icon
 	.drewl-mp-card:nth-child(4)
 		display: block
 .dmp5
 	.drewl-mp-controls span:nth-child(5)
-		background-image: url(../images/pinterest.svg)
-		border-color: #FFD12F
+		@include active-icon
+		&:hover
+			@include on-hover-active-icon
 	.drewl-mp-card:nth-child(5)
 		display: block
 .dmp6
 	.drewl-mp-controls span:nth-child(6)
-		background-image: url(../images/slack.svg)
-		border-color: #FFD12F
+		@include active-icon
+		&:hover
+			@include on-hover-active-icon
 	.drewl-mp-card:nth-child(6)
 		display: block
 .dmp1.dmp2.dmp3.dmp4.dmp5.dmp6
 	.drewl-mp-controls span:nth-child(7)
 		border-color: #FFD12F !important
-
 
 %image
 	background-size: cover
@@ -391,7 +411,7 @@
 		color: #717274
 	.drewl-t
 		font-weight: 700
-		color: #0576b9
+		color: #388CE0
 	.drewl-icon
 		vertical-align: middle
 		margin: 0 8px 0 0
