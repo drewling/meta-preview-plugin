@@ -18,10 +18,11 @@
 	-webkit-transform: $arg
 	transform: $arg
 
-@mixin on-hover-inactive-icon()
+@mixin on-hover-inactive-icon($class)
 	&:hover
+		background-image: url(../images/#{$class}.png)
 		border-color: #FFD12F !important
 
 @mixin active-icon()
-	img 
-		border-color: #FFD12F !important
+	filter: grayscale(0)
+	border-color: #FFD12F !important

@@ -29,17 +29,17 @@
 			background-size: 20px 20px
 
 		.title-icon.google 
-			background-image: url(../images/google.svg)
+			background-image: url(../images/google.png)
 		.title-icon.facebook 
-			background-image: url(../images/facebook.svg)
+			background-image: url(../images/facebook.png)
 		.title-icon.twitter 
-			background-image: url(../images/twitter.svg)
+			background-image: url(../images/twitter.png)
 		.title-icon.linkedin 
-			background-image: url(../images/linkedin.svg)
+			background-image: url(../images/linkedin.png)
 		.title-icon.pinterest 
-			background-image: url(../images/pinterest.svg)
+			background-image: url(../images/pinterest.png)
 		.title-icon.slack 
-			background-image: url(../images/slack.svg)					
+			background-image: url(../images/slack.png)					
 
 
 	.drewl-icon
@@ -67,22 +67,51 @@
 	overflow: hidden
 	border-bottom: 1px solid #edf0f2
 	padding: 27px 24px 0
+	
 	span
 		cursor: pointer
-		margin: 0 5px 0
+		margin: 0 10px 0
 		display: inline-block
 		text-align: center
 		width: 36px
 		float: left
-		
-		img 
-			display: block
-			margin: 0
-			width: 20px
-			height: 20px
-			padding: 0 5px 20px
-			border-bottom: 3px solid transparent
-			@include on-hover-inactive-icon
+		padding: 0 5px 20px
+		border-bottom: 3px solid transparent
+		// img 
+		// 	display: block
+		// 	margin: 0
+		// 	width: 20px
+		// 	height: 20px
+		// 	padding: 0 5px 20px
+		// 	border-bottom: 3px solid transparent
+		// 	@include on-hover-inactive-icon
+
+	.control-icon
+		display: inline-block
+		width: 25px
+		height: 25px
+		background-repeat: no-repeat
+		background-size: 25px 25px
+		background-position: center top
+
+	.control-icon.google 
+		background-image: url(../images/google-off.png)
+		@include on-hover-inactive-icon('google')
+	.control-icon.facebook
+		background-image: url(../images/facebook-off.png)
+		@include on-hover-inactive-icon('facebook')
+	.control-icon.twitter 
+		background-image: url(../images/twitter-off.png)
+		@include on-hover-inactive-icon('twitter')
+	.control-icon.linkedin 
+		background-image: url(../images/linkedin-off.png)
+		@include on-hover-inactive-icon('linkedin')
+	.control-icon.pinterest 
+		background-image: url(../images/pinterest-off.png)
+		@include on-hover-inactive-icon('pinterest')
+	.control-icon.slack 
+		background-image: url(../images/slack-off.png)
+		@include on-hover-inactive-icon('slack')
 
 	span:last-child
 		line-height: 17px
@@ -91,12 +120,16 @@
 		text-align: center
 		font-size: 14px
 		font-weight: 700
-		padding-bottom: 23px
+		padding-bottom: 28px
 		border-bottom: 3px solid transparent
-		@include on-hover-inactive-icon
+		
 		svg
 			display: none
 
+	svg
+		pointer-events: none
+		display: block	
+		
 .drewl-mp-widgets
 	padding: 26px 28px 0
 	margin-bottom: -27px
@@ -104,32 +137,38 @@
 
 .dmp1
 	.drewl-mp-controls span:nth-child(1)
-		@include active-icon
+		background-image: url(../images/google.png)
+		border-color: #FFD12F
 	.drewl-mp-card:nth-child(1)
 		display: block
 .dmp2
 	.drewl-mp-controls span:nth-child(2)
-		@include active-icon
+		background-image: url(../images/facebook.png)
+		border-color: #FFD12F
 	.drewl-mp-card:nth-child(2)
 		display: block
 .dmp3
 	.drewl-mp-controls span:nth-child(3)
-		@include active-icon
+		background-image: url(../images/twitter.png)
+		border-color: #FFD12F
 	.drewl-mp-card:nth-child(3)
 		display: block
 .dmp4
 	.drewl-mp-controls span:nth-child(4)
-		@include active-icon
+		background-image: url(../images/linkedin.svg)
+		border-color: #FFD12F
 	.drewl-mp-card:nth-child(4)
 		display: block
 .dmp5
 	.drewl-mp-controls span:nth-child(5)
-		@include active-icon
+		background-image: url(../images/pinterest.svg)
+		border-color: #FFD12F
 	.drewl-mp-card:nth-child(5)
 		display: block
 .dmp6
 	.drewl-mp-controls span:nth-child(6)
-		@include active-icon
+		background-image: url(../images/slack.svg)
+		border-color: #FFD12F
 	.drewl-mp-card:nth-child(6)
 		display: block
 .dmp1.dmp2.dmp3.dmp4.dmp5.dmp6
