@@ -6,7 +6,10 @@ defined( 'ABSPATH' ) || exit;
 
 <?php foreach ( $names as $name ): ?>
 	<div class="drewl-mp-card">
-		<div class="drewl-title"><?php echo $name; ?></div>
+		<div class="drewl-title">
+			<span class="title-icon <?php echo strtolower($name); ?>"></span>
+			<?php echo $name; ?>
+		</div>
 
 		<div class="drewl-mp-<?php echo strtolower( $name ); ?>">
 			<div class="drewl-image" style="background-image: url(<?php echo $meta['image']; ?>);"></div>
