@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/drewling/wordpress-serp-preview-plugin.git"
+    "url": "git+https://github.com/drewling/meta-preview-plugin.git"
   },
   "author": "Rhys Adams",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/drewling/wordpress-serp-preview-plugin/issues"
+    "url": "https://github.com/drewling/meta-preview-plugin/issues"
   },
-  "homepage": "https://github.com/drewling/wordpress-serp-preview-plugin#readme",
+  "homepage": "https://github.com/drewling/meta-preview-plugin#readme",
   "devDependencies": {
     "eslint": "^8.23.0"
   }
