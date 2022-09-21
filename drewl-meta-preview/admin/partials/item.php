@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 		</div>
 
 		<div class="drewl-mp-<?php echo strtolower( $name ); ?>">
-			<div class="drewl-image" style="background-image: url(<?php echo $meta['image']; ?>);"></div>
+			<div id="drewl-image-<?php echo strtolower( $name ); ?>" class="drewl-image" style="background-image: url(<?php echo $meta['image']; ?>);"></div>
 
 			<div class="drewl-inner">
 				<span class="drewl-u">

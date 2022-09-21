@@ -128,6 +128,61 @@ document.addEventListener( 'DOMContentLoaded', () => {
 	if ( init_status != 'auto-draft' ) {
 		requestData();
 	}
+
+	let featuredImgInterval = setInterval( () => {
+		let featuredImg = document.querySelector( '.components-responsive-wrapper__content' );
+		if ( featuredImg ) {
+			clearInterval( featuredImgInterval );
+			observeFeaturedImage();
+		}
+	}, 300 );
+
+	// Featured image real-time change
+	let observeFeaturedImage = () => {
+		// MutationObserver IE11+
+		if ( window.MutationObserver == undefined )
+			return;
+
+		// eslint-disable-next-line no-unused-vars
+		let observer = new MutationObserver( ( mutations, observer ) => {
+			for ( let mutation of mutations ) {
+				if ( mutation.type === 'childList' ) {
+
+					let featuredImgIntvl = setInterval( () => {
+						let featuredImg = document.querySelector( '.components-responsive-wrapper__content' );
+						if ( featuredImg ) {
+							clearInterval( featuredImgIntvl );
+							console.log( 'Mutation Detected: A child node has been added or removed.' );
+							let newFeaturedImg = document.querySelector( '.components-responsive-wrapper__content' ).src;
+
+							// Get original image
+							let reg_search = /(-[0-9]+x[0-9]+).(jpg|png|gif|svg|webp)$/;
+							const match = reg_search.exec( newFeaturedImg );
+
+							if ( match ) {
+								newFeaturedImg = newFeaturedImg.replace( match[1], '' );
+							}
+
+							document.getElementById( 'drewl-image-facebook' ).style.backgroundImage = "url('" + newFeaturedImg + "')";
+							document.getElementById( 'drewl-image-twitter' ).style.backgroundImage = "url('" + newFeaturedImg + "')";
+							document.getElementById( 'drewl-image-linkedin' ).style.backgroundImage = "url('" + newFeaturedImg + "')";
+							document.getElementById( 'drewl-image-pinterest' ).style.backgroundImage = "url('" + newFeaturedImg + "')";
+							document.getElementById( 'drewl-image-slack' ).style.backgroundImage = "url('" + newFeaturedImg + "')";
+
+						}
+					}, 100 );
+				}
+			}
+		} );
+
+		let featuredImgBtn = document.querySelector( '.editor-post-featured-image__preview' );
+
+		observer.observe( featuredImgBtn, {
+			childList: true,
+		} );
+	}
+
+
 } );
 
 /**
@@ -193,8 +248,11 @@ let drewlChangeSlug = ( slug ) => {
 		if ( slug_obj.closest( '.drewl-mp-google' ) !== null ) { // targets only google preview
 			let slug_str = slug_obj.querySelector( 'span' ).innerHTML;
 			let reg_search = /[a-z-0-9]*$/;
-			let res = slug_str.replace( reg_search, slug );
-			slug_obj.querySelector( 'span' ).innerHTML = res;
+			let found = reg_search.test( slug_str );
+			if ( found ) {
+				let res = slug_str.replace( reg_search, slug );
+				slug_obj.querySelector( 'span' ).innerHTML = res;
+			}
 		}
 	}
 }
@@ -205,8 +263,13 @@ window.onload = () => {
 	let description = document.querySelector( '#yoast-google-preview-description-metabox' );
 
 	// Handles slug changes
-	slug.addEventListener( 'keyup', () => {
-		drewlChangeSlug( slug.value );
+	slug.addEventListener( 'keyup', (e) => {
+		let inputKey = e.key;
+		//eslint-disable-next-line
+		const specialChars = /[`!@#$%^&*()_+\=\[\]{};':"\\|,.<>\/?~]/;
+		if ( ! specialChars.test( inputKey ) ) {
+			drewlChangeSlug( slug.value );
+		}
 	} );
 
 	// Handles title and description changes
