@@ -2,9 +2,9 @@
 /**
  * Plugin Name: Meta Preview
  * Plugin URI: https://wordpress.org/plugins/drewl-meta-preview/
- * Description: OpenGraph meta-tags preview plugin
+ * Description: The Drewl Meta Preview plugin will display how your content (post or page) will show on different social sharing platforms.
  * Version: 1.0.0
- * Author: drewl.com
+ * Author: Drewl
  * Author URI: https://drewl.com/
  * License: GPL2+
  * Text Domain: drewl-meta-preview
@@ -45,7 +45,7 @@ class DrewlMetaPreviewPlugin {
 				);
 
 				wp_enqueue_script( 'drewl-meta-preview', plugin_dir_url( __FILE__ ) . 'admin/js/script.js',
-					array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components'/*, 'wp-editor'*/ ),
+					array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-hooks'/*, 'wp-editor'*/ ),
 					filemtime( plugin_dir_path( __FILE__ ) . '/admin/js/script.js' ), true
 				);
 				wp_localize_script( 'drewl-meta-preview', 'drewl_meta_preview',
