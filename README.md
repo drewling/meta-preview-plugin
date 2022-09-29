@@ -1,11 +1,11 @@
 # Drewl Meta Preview
 
 <img width="1554" alt="Hero@2x" src="https://user-images.githubusercontent.com/13052749/192966715-e2d3cb0d-5c12-49b1-add6-8becd834bb07.png">
-The Drewl Meta Preview plugin will display how your content (post or page) will show on different social sharing platforms.
+The Drewl Meta Preview plugin will display how your WordPress content (post or page) will show on different social sharing platforms.
 
 ## Prerequisites
 
-This plugin uses Meta tags (OG tags), so to function properly it will need a tier plugin generates these Meta tags. Alternatively, you can manually specify them in your theme's header template.
+This plugin uses Meta tags (OG tags), so to function properly it will need a plugin that generates these Meta tags for you, such as Yoast. Alternatively, you can manually specify them in your theme's header template.
 
 ## Installation
 
