@@ -147,12 +147,21 @@ document.addEventListener('DOMContentLoaded', () => {
 		let observer = new MutationObserver((mutations, observer) => {
 			// eslint-disable-next-line no-unused-vars
 			for (let mutation of mutations) {
+
+				// Unset background when featured image is removed
+				document.getElementById('drewl-image-facebook').style.backgroundImage = "";
+				document.getElementById('drewl-image-twitter').style.backgroundImage = "";
+				document.getElementById('drewl-image-linkedin').style.backgroundImage = "";
+				document.getElementById('drewl-image-pinterest').style.backgroundImage = "";
+				document.getElementById('drewl-image-slack').style.backgroundImage = "";
+
 				let featuredImgIntvl = setInterval(() => {
 					let featuredImg = document.querySelector('.components-responsive-wrapper__content');
 					if (featuredImg) {
 						clearInterval(featuredImgIntvl);
 
 						let newFeaturedImg = document.querySelector('.components-responsive-wrapper__content').src;
+
 
 						// Get original image
 						let reg_search = /(-[0-9]+x[0-9]+).(jpg|png|gif|svg|webp)$/;
