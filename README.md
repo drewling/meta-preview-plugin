@@ -20,8 +20,9 @@ To be able to clone this repository you will need to have Git installed on you c
 
 ```
 git clone git@github.com:drewling/meta-preview-plugin.git
-cd wordpress-serp-preview-plugin
+cd meta-preview-plugin
 ```
+copy _'drewl-meta-preview'_ folder and put it inside _'wp-content/plugins'_ directory.
 
 ## Usage
 
