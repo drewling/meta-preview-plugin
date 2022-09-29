@@ -1,5 +1,6 @@
 # Drewl Meta Preview
 
+<img width="1554" alt="Hero@2x" src="https://user-images.githubusercontent.com/13052749/192966715-e2d3cb0d-5c12-49b1-add6-8becd834bb07.png">
 The Drewl Meta Preview plugin will display how your content (post or page) will show on different social sharing platforms.
 
 ## Prerequisites
@@ -25,6 +26,9 @@ cd wordpress-serp-preview-plugin
 ## Usage
 
 To display the preview, create a new post or page, then assign it a featured image and save the content. The preview will display in a __Meta Preview__ section in the edit screen.
+
+<img width="1574" alt="Screenshot@2x" src="https://user-images.githubusercontent.com/13052749/192966835-49c15384-3e19-4c14-ba4d-1f3a70b1c350.png">
+
 
 ## Contributing
 
