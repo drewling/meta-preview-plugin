@@ -39,9 +39,9 @@ class DrewlMetaPreviewPlugin {
 
 			if( in_array( $hook, array( 'post.php', 'post-new.php' ) ) && in_array( $post_type, array( 'page', 'post' ) ) ) {
 
-				wp_enqueue_style( 'drewl-meta-preview', plugin_dir_url( __FILE__ ) . 'admin/dist/style.css',
+				wp_enqueue_style( 'drewl-meta-preview', plugin_dir_url( __FILE__ ) . 'admin/css/style.css',
 					array(),
-					filemtime( plugin_dir_path( __FILE__ ) . '/admin/dist/style.css' )
+					filemtime( plugin_dir_path( __FILE__ ) . '/admin/css/style.css' )
 				);
 
 				wp_enqueue_script( 'drewl-meta-preview', plugin_dir_url( __FILE__ ) . 'admin/js/script.js',
