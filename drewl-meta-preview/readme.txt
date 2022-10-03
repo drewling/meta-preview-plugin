@@ -1,5 +1,5 @@
 === Drewl Meta Preview ===
-Contributors: drewl
+Contributors: drewlstudio
 Tags: preview, social, sharing, seo
 Donate link: -
 Requires at least: 5.4
