@@ -68,8 +68,8 @@ class DrewlMetaPreviewPlugin {
 			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 				return;
 			}
-
-			update_option( 'drewl_mp_options', htmlentities( $_POST['drewl_mp_options'] ) );
+			$drewl_options = sanitize_text_field( $_POST['drewl_mp_options'] );
+			update_option( 'drewl_mp_options', $drewl_options );
 		} );
 
 		add_filter('script_loader_tag', array( $this, 'add_defer_attribute' ), 10, 2);
@@ -133,13 +133,15 @@ class DrewlMetaPreviewPlugin {
 	 * Handle ajax request
 	 */
 	public function get_data() {
-		$url = get_permalink( $_GET['id'] );
+		$post_id = intval( $_GET['id'] );
+		$url = get_permalink( $post_id );
 
+		$post_content = wp_kses_post( $_POST['content'] );
 		$body = '';
 
-		if ( ! empty( $_POST['content'] ) ) {
+		if ( ! empty( $post_content ) ) {
 			// draft posts can't be acccessed via wp_remote_get
-			$body = stripslashes( $_POST['content'] );
+			$body = stripslashes( $post_content );
 		} else {
 			$response = wp_remote_get( $url, array(
 				'timeout' => 10,
@@ -207,7 +209,7 @@ class DrewlMetaPreviewPlugin {
 		if ( $hash == $_GET['hash'] ) {
 			header( 'HTTP/1.1 304 Not Modified' );
 		} else {
-			echo '<div data-hash="' . $hash . '">' . $out . '</div>';
+			echo '<div data-hash="' . esc_attr( $hash ) . '">' . wp_kses_post( $out ) . '</div>';
 		}
 
 		exit;
@@ -215,7 +217,7 @@ class DrewlMetaPreviewPlugin {
 
 	public function add_defer_attribute($tag, $handle) {
 		if ( 'drewl-meta-preview' !== $handle )
-		  return $tag;
+			return $tag;
 		return str_replace( ' src', ' defer="defer" src', $tag );
 	}
 
@@ -229,12 +231,12 @@ class DrewlMetaPreviewPlugin {
 
 		if ( ! defined( 'WPSEO_VERSION' ) ) {
 			echo '<!-- og tags -->' . PHP_EOL;
-			echo '<meta property="og:url"                content="' . get_permalink( $post->ID ) . '" />' . PHP_EOL;
-			echo '<meta property="og:type"               content="' . $post->post_type . '" />' . PHP_EOL;
-			echo '<meta property="og:title"              content="' . $post->post_title . '" />' . PHP_EOL;
-			echo '<meta property="og:description"        content="' . $meta_description . '" />' . PHP_EOL;
-			echo '<meta property="og:image"              content="' . get_the_post_thumbnail_url( $post->ID, 'large' ) . '" />' . PHP_EOL;
-			echo '<meta property="og:site_name"          content="' . get_bloginfo( 'name' ) . '" />' . PHP_EOL;
+			echo '<meta property="og:url"                content="' . esc_url( get_permalink( $post->ID ) ) . '" />' . PHP_EOL;
+			echo '<meta property="og:type"               content="' . esc_attr( $post->post_type ) . '" />' . PHP_EOL;
+			echo '<meta property="og:title"              content="' . esc_html( $post->post_title ) . '" />' . PHP_EOL;
+			echo '<meta property="og:description"        content="' . esc_textarea( $meta_description ) . '" />' . PHP_EOL;
+			echo '<meta property="og:image"              content="' . esc_url( get_the_post_thumbnail_url( $post->ID, 'large' ) ) . '" />' . PHP_EOL;
+			echo '<meta property="og:site_name"          content="' . esc_attr( get_bloginfo( 'name' ) ) . '" />' . PHP_EOL;
 			echo '<!-- og tags -->' . PHP_EOL;
 		}
 	}
