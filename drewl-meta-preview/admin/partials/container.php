@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || exit;
 
 ?>
 
-<div id="drewl-meta-preview" class="<?php echo $classes; ?>">
+<div id="drewl-meta-preview" class="<?php echo esc_attr( $classes ); ?>">
 	<div class="drewl-mp-controls">
 		<span><i class="control-icon google"></i></span>
 		<span><i class="control-icon facebook"></i></span>
