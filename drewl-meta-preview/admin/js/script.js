@@ -271,17 +271,19 @@ window.onload = () => {
 	let slug = document.querySelector('#yoast-google-preview-slug-metabox');
 	let description = document.querySelector('#yoast-google-preview-description-metabox');
 
-	// Handles slug changes
-	slug.addEventListener('keyup', (e) => {
-		let inputKey = e.key;
-		//eslint-disable-next-line
-		const specialChars = /[`!@#$%^&*()_+\=\[\]{};':"\\|,.<>\/?~]/;
-		if (!specialChars.test(inputKey)) {
-			drewlChangeSlug(slug.value);
-		}
-	});
+	if (title) {
+		// Handles slug changes
+		slug.addEventListener('keyup', (e) => {
+			let inputKey = e.key;
+			//eslint-disable-next-line
+			const specialChars = /[`!@#$%^&*()_+\=\[\]{};':"\\|,.<>\/?~]/;
+			if (!specialChars.test(inputKey)) {
+				drewlChangeSlug(slug.value);
+			}
+		});
 
-	// Handles title and description changes
-	drewlObserver(title, 'title');
-	drewlObserver(description, 'description');
+		// Handles title and description changes
+		drewlObserver(title, 'title');
+		drewlObserver(description, 'description');
+	}
 };
